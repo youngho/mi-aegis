@@ -1,8 +1,10 @@
 #if UNITY_EDITOR
 using System.IO;
+using System.Linq;
 using PinkSoft.Aegis.Missions;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -87,6 +89,71 @@ namespace PinkSoft.Aegis.Editor
             EditorSceneManager.SaveScene(scene, scenePath);
             AssetDatabase.SaveAssets();
             Debug.Log($"[AEGIS] Dev test scene created: {scenePath}");
+        }
+
+        [MenuItem("PinkSoft/AEGIS/Build Addressables")]
+        public static void BuildAddressablesMenu()
+        {
+            EditorApplication.delayCall += BuildAddressables;
+            Debug.Log("[AEGIS] Addressables build scheduled.");
+        }
+
+        public static void BuildAddressables()
+        {
+            var settings = AddressableAssetSettingsDefaultObject.GetSettings(false);
+            if (settings == null)
+            {
+                Debug.LogError("[AEGIS] AddressableAssetSettings not found.");
+                return;
+            }
+
+            AddressableAssetSettings.CleanPlayerContent(settings.ActivePlayerDataBuilder);
+            AddressableAssetSettings.BuildPlayerContent(out var result);
+            if (!string.IsNullOrEmpty(result.Error))
+                Debug.LogError($"[AEGIS] Addressables build failed: {result.Error}");
+            else
+                Debug.Log($"[AEGIS] Addressables build succeeded. Output: {settings.RemoteCatalogBuildPath}");
+        }
+
+        [MenuItem("PinkSoft/AEGIS/Copy Bundle To mi StreamingAssets")]
+        public static void CopyBundleToMi()
+        {
+            const string version = "1.0.0";
+            var bundleName = $"{AddressableAddress}_{version}.bundle";
+            var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
+            if (string.IsNullOrEmpty(projectRoot))
+                return;
+
+            var searchRoots = new[]
+            {
+                Path.Combine(projectRoot, "ServerData"),
+                Path.Combine(projectRoot, "Library", "com.unity.addressables", "aa"),
+                Path.Combine(projectRoot, "Library", "com.unity.addressables", "aa", "OSX"),
+            };
+
+            string source = null;
+            foreach (var root in searchRoots)
+            {
+                if (!Directory.Exists(root))
+                    continue;
+                source = Directory.GetFiles(root, "*.bundle", SearchOption.AllDirectories)
+                    .OrderByDescending(File.GetLastWriteTimeUtc)
+                    .FirstOrDefault();
+                if (source != null)
+                    break;
+            }
+
+            if (source == null)
+            {
+                Debug.LogError("[AEGIS] No .bundle found. Run Build Addressables first.");
+                return;
+            }
+
+            var destDir = Path.GetFullPath(Path.Combine(projectRoot, "..", "mi", "Assets", "StreamingAssets", "Missions"));
+            Directory.CreateDirectory(destDir);
+            var dest = Path.Combine(destDir, bundleName);
+            File.Copy(source, dest, true);
+            Debug.Log($"[AEGIS] Copied bundle to mi: {dest}");
         }
 
         static GameObject CreateOrUpdateMissionPrefab()

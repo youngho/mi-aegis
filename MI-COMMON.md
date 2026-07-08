@@ -407,9 +407,9 @@ mi-aegis/
 - [x] `com.unity.addressables` 패키지 설치
 - [x] `AegisMissionController` (`IMissionController`) 구현
 - [x] `MissionInputSubscription`으로 입력 구독/해제
-- [ ] Stage 1~4 씬 및 레일 카메라 구현 (플레이스홀더 씬 생성 메뉴 제공)
-- [ ] `AegisMission` 루트 프리팹 생성 및 Addressables 등록 (Unity 메뉴: **PinkSoft → AEGIS → Setup Mission**)
-- [ ] Addressables Remote 빌드 파이프라인 구성
+- [x] Stage 1~4 플레이스홀더 씬 생성 (`Assets/Stages/Stage1~4`)
+- [x] `AegisMission` 루트 프리팹 생성 및 Addressables `aegis_rail_shooter` 등록
+- [ ] Addressables Remote 빌드 및 mi `StreamingAssets` 복사 (Unity 메뉴: **Build Addressables** → **Copy Bundle To mi StreamingAssets**)
 - [x] `catalog.json` 메타데이터 작성 및 mi에 등록
 - [ ] mi Core와 통합 테스트 (StreamingAssets 폴백)
 - [x] BDS/Core 코드 미포함 (mi-aegis에 `PinkSoft.Core` / `Assets/BDS` 없음)
@@ -423,6 +423,8 @@ mi-aegis 프로젝트를 연 뒤:
 | **PinkSoft → AEGIS → Setup Mission (Prefab + Addressables)** | `AegisMission` 프리팹 생성 및 `aegis_rail_shooter` Addressable 등록 |
 | **PinkSoft → AEGIS → Create Stage Placeholder Scenes** | `Assets/Stages/Stage1~4` 플레이스홀더 씬 생성 |
 | **PinkSoft → AEGIS → Create Dev Test Scene** | `AegisMissionDev` 단독 테스트 씬 생성 |
+| **PinkSoft → AEGIS → Build Addressables** | Addressables 빌드 (비동기 스케줄) |
+| **PinkSoft → AEGIS → Copy Bundle To mi StreamingAssets** | 빌드 산출물을 mi 로컬 테스트 경로로 복사 |
 
 ---
 

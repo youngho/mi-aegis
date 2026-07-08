@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Aegis_Mission
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Aegis_Mission
+  m_GUID: 3b18e4bfb536143bf9115d60df461ee4
+  m_SerializeEntries:
+  - m_GUID: 3c382341f710d45ea9496b02ee86bfe7
+    m_Address: aegis_rail_shooter
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - mission_aegis
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ea200dbdb2f2b4cf2b48efb08b31c49e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6d71ab35fba3a48ccb64c7feaa54e7b9, type: 2}
+    - {fileID: 11400000, guid: ff1cbb92a518a40e78f3c5f1bd975608, type: 2}

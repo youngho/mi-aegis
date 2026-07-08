@@ -149,7 +149,7 @@ namespace PinkSoft.Aegis.Editor
                 return;
             }
 
-            var destDir = Path.GetFullPath(Path.Combine(projectRoot, "..", "mi", "Assets", "StreamingAssets", "Missions"));
+            var destDir = Path.GetFullPath(Path.Combine(projectRoot, "..", "..", "mi", "Assets", "StreamingAssets", "Missions"));
             Directory.CreateDirectory(destDir);
             var dest = Path.Combine(destDir, bundleName);
             File.Copy(source, dest, true);

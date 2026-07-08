@@ -6,7 +6,6 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace PinkSoft.Aegis.Editor
 {
@@ -51,7 +50,6 @@ namespace PinkSoft.Aegis.Editor
                     continue;
 
                 var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-                SceneManager.GetActiveScene().name = stageName;
 
                 CreatePlaceholderTarget(stageName, new Vector3(0f, 1f, 5f));
                 CreatePlaceholderTarget($"{stageName}_boss", new Vector3(2f, 1.5f, 7f));

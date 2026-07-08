@@ -12,7 +12,7 @@ namespace PinkSoft.Aegis.Missions
         void Awake()
         {
             if (missionController == null)
-                missionController = FindFirstObjectByType<AegisMissionController>();
+                missionController = FindAnyObjectByType<AegisMissionController>();
             if (debugInput == null)
                 debugInput = GetComponent<DebugMissionInput>();
         }

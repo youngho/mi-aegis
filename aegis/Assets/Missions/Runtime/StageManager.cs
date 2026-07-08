@@ -1,4 +1,6 @@
+#nullable enable
 using System;
+using PinkSoft.MissionSDK;
 using UnityEngine;
 
 namespace PinkSoft.Aegis.Missions
@@ -11,7 +13,7 @@ namespace PinkSoft.Aegis.Missions
         int _currentIndex = -1;
 
         public event Action<int>? OnStageStarted;
-        public event Action<int>? OnAllStagesComplete;
+        public event Action? OnAllStagesComplete;
 
         public int CurrentStageIndex => _currentIndex;
         public int StageCount => stages.Length;
@@ -51,9 +53,9 @@ namespace PinkSoft.Aegis.Missions
             Advance();
         }
 
-        public event Action<PinkSoft.MissionSDK.ScoreEventType, string>? ReportEventRequested;
+        public event Action<ScoreEventType, string>? ReportEventRequested;
 
-        void ReportEvent(PinkSoft.MissionSDK.ScoreEventType eventType, string targetId)
+        void ReportEvent(ScoreEventType eventType, string targetId)
         {
             ReportEventRequested?.Invoke(eventType, targetId);
         }

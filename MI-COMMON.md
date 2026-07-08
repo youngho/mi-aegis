@@ -403,16 +403,26 @@ mi-aegis/
 
 ## 9. 구현 체크리스트
 
-- [ ] MissionSDK 3파일을 `aegis/Assets/MissionSDK/Runtime/`에 추가
-- [ ] `com.unity.addressables` 패키지 설치
-- [ ] `AegisMissionController` (`IMissionController`) 구현
-- [ ] `MissionInputSubscription`으로 입력 구독/해제
-- [ ] Stage 1~4 씬 및 레일 카메라 구현
-- [ ] `AegisMission` 루트 프리팹 생성 및 Addressables 등록
+- [x] MissionSDK 3파일을 `aegis/Assets/MissionSDK/Runtime/`에 추가
+- [x] `com.unity.addressables` 패키지 설치
+- [x] `AegisMissionController` (`IMissionController`) 구현
+- [x] `MissionInputSubscription`으로 입력 구독/해제
+- [ ] Stage 1~4 씬 및 레일 카메라 구현 (플레이스홀더 씬 생성 메뉴 제공)
+- [ ] `AegisMission` 루트 프리팹 생성 및 Addressables 등록 (Unity 메뉴: **PinkSoft → AEGIS → Setup Mission**)
 - [ ] Addressables Remote 빌드 파이프라인 구성
-- [ ] `catalog.json` 메타데이터 작성 및 mi에 등록
+- [x] `catalog.json` 메타데이터 작성 및 mi에 등록
 - [ ] mi Core와 통합 테스트 (StreamingAssets 폴백)
-- [ ] BDS/Core 코드 미포함 검증
+- [x] BDS/Core 코드 미포함 (mi-aegis에 `PinkSoft.Core` / `Assets/BDS` 없음)
+
+### Unity 에디터 메뉴
+
+mi-aegis 프로젝트를 연 뒤:
+
+| 메뉴 | 동작 |
+|------|------|
+| **PinkSoft → AEGIS → Setup Mission (Prefab + Addressables)** | `AegisMission` 프리팹 생성 및 `aegis_rail_shooter` Addressable 등록 |
+| **PinkSoft → AEGIS → Create Stage Placeholder Scenes** | `Assets/Stages/Stage1~4` 플레이스홀더 씬 생성 |
+| **PinkSoft → AEGIS → Create Dev Test Scene** | `AegisMissionDev` 단독 테스트 씬 생성 |
 
 ---
 

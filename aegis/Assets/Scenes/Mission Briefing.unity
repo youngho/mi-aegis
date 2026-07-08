@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -248,14 +248,14 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,14 +282,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -334,8 +334,11 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &410087041
 Transform:
   m_ObjectHideFlags: 0
@@ -363,17 +366,124 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!1 &748672439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 748672442}
+  - component: {fileID: 748672441}
+  - component: {fileID: 748672440}
+  m_Layer: 0
+  m_Name: MissionBriefingUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &748672440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748672439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56cdf47f8c1364b86a8d161c8c526015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Aegis.UI.MissionBriefingController
+  nextSceneName: 
+  briefing: "AGENT,\n\n3\uB144 \uC804, \uB125\uC0AC \uCF54\uC5B4(Nexa Core)\uB294
+    \uB3C4\uC2DC \uCE58\uC548 \uC2DC\uC2A4\uD15C\uC744 \uCD1D\uAD04\uD558\uB294 \uCC28\uC138\uB300
+    \uC778\uACF5\uC9C0\uB2A5 '\uC774\uC9C0\uC2A4(AEGIS)'\uB97C \uAC1C\uBC1C\uD588\uB2E4.
+    \uC774\uC9C0\uC2A4\uB294 \uAD50\uD1B5 \uD1B5\uC81C, \uBC94\uC8C4 \uC608\uCE21,
+    \uC751\uAE09 \uB300\uC751\uAE4C\uC9C0 \uB3C4\uC2DC\uC758 \uBAA8\uB4E0 \uC548\uC804\uB9DD\uC744
+    \uAD00\uB9AC\uD558\uBA70 \uC778\uB958 \uC5ED\uC0AC\uC0C1 \uAC00\uC7A5 \uC9C4\uBCF4\uB41C
+    \uCE58\uC548 \uC2DC\uC2A4\uD15C\uC73C\uB85C \uD3C9\uAC00\uBC1B\uC558\uB2E4.\n\n\uADF8\uB7EC\uB098
+    36\uC2DC\uAC04 \uC804, \uAD6D\uC81C \uD14C\uB7EC \uC870\uC9C1 '\uBE14\uB799 \uB85C\uD130\uC2A4(Black
+    Lotus)'\uAC00 \uB125\uC0AC \uCF54\uC5B4 \uBCF8\uC0AC\uC758 \uC591\uC790\uC554\uD638
+    \uBC29\uD654\uBCBD\uC744 \uB6AB\uACE0 \uC774\uC9C0\uC2A4\uC758 \uD575\uC2EC \uCF54\uC5B4\uB97C
+    \uC7A5\uC545\uD588\uB2E4. \uC774\uB4E4\uC740 \uC774\uC9C0\uC2A4\uC758 \uB208\u2014\uB3C4\uC2DC
+    \uC804\uC5ED\uC5D0 \uAE54\uB9B0 \uAC10\uC2DC \uCE74\uBA54\uB77C, \uB4DC\uB860,
+    \uC790\uC728\uC8FC\uD589 \uC2DC\uC2A4\uD15C\u2014\uC744 \uBB34\uAE30\uB85C \uBC14\uAFB8\uC5B4,
+    24\uC2DC\uAC04 \uB0B4\uC5D0 \uB3C4\uC2DC \uC911\uC2EC\uAC00\uC758 \uC804\uB825\uB9DD\uACFC
+    \uAD50\uD1B5\uB9DD\uC744 \uB3D9\uC2DC\uC5D0 \uB9C8\uBE44\uC2DC\uD0A4\uACA0\uB2E4\uACE0
+    \uC120\uC5B8\uD588\uB2E4. \uC778\uC9C8 \uD611\uC0C1\uC740 \uC5C6\uB2E4. \uC774\uBBF8
+    \uB125\uC0AC \uCF54\uC5B4 \uBCF8\uC0AC \uC11C\uBC84\uC2E4\uC5D0\uB294 \uC218\uC11D
+    \uC5D4\uC9C0\uB2C8\uC5B4\uC640 \uBCF4\uC548\uD300 \uC9C1\uC6D0 7\uBA85\uC774
+    \uC778\uC9C8\uB85C \uC7A1\uD600 \uC788\uC73C\uBA70, \uC774\uB4E4\uC740 \uC774\uC9C0\uC2A4\uC758
+    \uB9C8\uC2A4\uD130 \uD0A4 \uCF54\uB4DC\uB97C \uC54C\uACE0 \uC788\uB294 \uC720\uC77C\uD55C
+    \uC0DD\uC874\uC790\uB4E4\uC774\uB2E4.\n\n\uC815\uBD80\uB294 \uACF5\uC2DD \uB300\uC751\uC744
+    \uD560 \uC218 \uC5C6\uB2E4. \uC774\uC9C0\uC2A4\uAC00 \uAC01\uAD6D\uC758 \uAD70\uC0AC
+    \uC704\uC131\uB9DD\uACFC\uB3C4 \uC5F0\uACB0\uB418\uC5B4 \uC788\uC5B4, \uB300\uADDC\uBAA8
+    \uBB34\uB825 \uC9C4\uC555\uC740 \uB3C4\uC2DC \uC804\uCCB4\uC758 \uC778\uD504\uB77C
+    \uBD95\uAD34\uB85C \uC774\uC5B4\uC9C8 \uC218 \uC788\uAE30 \uB54C\uBB38\uC774\uB2E4.
+    \n\n\uC720\uC77C\uD55C \uBC29\uBC95\uC740 \uC740\uBC00\uD558\uACE0, \uC815\uBC00\uD558\uBA70,
+    \uB2E8\uB3C5\uC73C\uB85C \uC2E4\uD589\uB418\uB294 \uCE68\uD22C\uC791\uC804\uC774\uB2E4.
+    \uC2E4\uD328\uD558\uB4E0 \uC131\uACF5\uD558\uB4E0 \uC815\uBD80\uB294 \uAC1C\uC785
+    \uC0AC\uC2E4\uC744 \uBD80\uC778\uD560 \uAC83\uC774\uB2E4.\n\n\uC774 \uBA54\uC2DC\uC9C0\uB294
+    5\uCD08 \uD6C4 \uC790\uB3D9 \uC18C\uAC70\uB41C\uB2E4."
+  charsPerSecond: 55
+  initialDelaySeconds: 0.65
+--- !u!114 &748672441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748672439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: b4023a3310d0e4265bad54450eb945bd, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: db02d6f693ed74ae0a8c5d928e9d6e88, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &748672442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748672439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,3 +540,4 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 748672442}

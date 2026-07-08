@@ -56,6 +56,6 @@ crashlytics-build.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
-Assets/Plugins/
-Assets/Plugins.meta
+aegis/Assets/Plugins/
+aegis/Assets/Plugins.meta
 mi/

@@ -202,6 +202,27 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             EnsureAegisScreen(screen);
             EnsureLoungeChairs();
+            FixSignRotationsInScene();
+        }
+
+        static void FixSignRotationsInScene()
+        {
+            var allTransforms = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None);
+            foreach (var t in allTransforms)
+            {
+                if (t.name == "Sign_Text")
+                {
+                    t.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    t.localScale = new Vector3(-1f, 1f, 1f);
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(t);
+                }
+                else if (t.name == "ExteriorSign_NexaCore")
+                {
+                    t.localRotation = Quaternion.Euler(0f, 180f, 0f);
+                    t.localScale = new Vector3(-8f, t.localScale.y, t.localScale.z);
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(t);
+                }
+            }
         }
 
         static void EnsureAegisScreen(Material screenMat)

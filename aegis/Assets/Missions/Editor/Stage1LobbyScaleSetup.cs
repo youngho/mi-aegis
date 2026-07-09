@@ -90,6 +90,11 @@ namespace PinkSoft.Aegis.Missions.Editor
                     t.localPosition = p;
                     t.localScale = new Vector3(t.localScale.x, 2.4f, t.localScale.z);
                 }
+                else if (t.name == "Sign_Text")
+                {
+                    t.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    t.localScale = new Vector3(-1f, 1f, 1f);
+                }
             }
 
             PrefabUtility.SaveAsPrefabAsset(root, path);

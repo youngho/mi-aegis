@@ -349,6 +349,7 @@ namespace PinkSoft.Aegis.Missions.Editor
             sign.transform.SetParent(parent, false);
             sign.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.ExteriorSignY, -15.55f);
             sign.transform.localScale = new Vector3(8f, 1.6f * Stage1LobbyDimensions.ScaleFromLegacy, 0.12f);
+            sign.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
             sign.GetComponent<Renderer>().sharedMaterial = m.sign;
 
             EnsureAccentLight("Lobby_ExteriorSignLight", new Vector3(0f, Stage1LobbyDimensions.ExteriorSignY, -14f), new Color(0.9f, 0.95f, 1f), 3f, 14f);

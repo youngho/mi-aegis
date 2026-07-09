@@ -358,8 +358,9 @@ Stage 2~4도 동일 패턴으로 `StageNCameraController` 를 추가합니다.
 3. **Stage1 작업/테스트:** `Assets/Scenes/Stages/Stage1_Lobby.unity` → Play (**마우스 좌클릭** 사격, **N** 스테이지 스킵).
 4. **전체 미션 테스트:** `Assets/Scenes/AegisMissionFull.unity` → Play.
 5. **Stage1 비주얼 재적용:** **Aegis → Apply Stage1 Lobby Visuals** 또는 **Build Stage1 Lobby Exterior**.
-6. **PC 조작·미션 셸 일괄 설정:** **Aegis → Ensure PC Play Setup In All Scenes** (최초 1회 권장).
-7. Stage1 컷/카메라 재설정: **Aegis → Setup Stage1 Lobby Play Scene**.
+6. **Stage1 내부 구조(2층 발코니·엘리베이터·주차장):** **Aegis → Build Stage1 Lobby Architecture**.
+7. **PC 조작·미션 셸 일괄 설정:** **Aegis → Ensure PC Play Setup In All Scenes** (최초 1회 권장).
+8. Stage1 컷/카메라 재설정: **Aegis → Setup Stage1 Lobby Play Scene**.
 
 단축키 전체 목록은 [§3.5 PC 조작](#35-pc-조작-마우스키보드)을 참고하세요.
 

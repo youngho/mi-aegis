@@ -189,12 +189,25 @@ namespace PinkSoft.Aegis.Missions.Editor
             sofa.transform.SetParent(parent, false);
             sofa.transform.position = pos;
 
-            var seat = CreatePbCube("Seat", sofa.transform, Vector3.zero, new Vector3(2.2f, 0.45f, 0.85f));
-            SetMat(seat, chair);
-            var back = CreatePbCube("Back", sofa.transform, new Vector3(0f, 0.55f, -0.38f), new Vector3(2.2f, 0.55f, 0.12f));
-            SetMat(back, chair);
-            var leg = CreatePbCube("Leg", sofa.transform, new Vector3(0f, 0.08f, 0.2f), new Vector3(2f, 0.08f, 0.6f));
-            SetMat(leg, metal);
+            var sofaPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Lobby_Sofa/scene.gltf");
+            if (sofaPrefab != null)
+            {
+                var inst = (GameObject)PrefabUtility.InstantiatePrefab(sofaPrefab);
+                inst.name = "Sofa_Visual";
+                inst.transform.SetParent(sofa.transform, false);
+                inst.transform.localPosition = new Vector3(0f, -0.1f, 0f);
+                inst.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                inst.transform.localScale = Vector3.one * 0.013f;
+            }
+            else
+            {
+                var seat = CreatePbCube("Seat", sofa.transform, Vector3.zero, new Vector3(2.2f, 0.45f, 0.85f));
+                SetMat(seat, chair);
+                var back = CreatePbCube("Back", sofa.transform, new Vector3(0f, 0.55f, -0.38f), new Vector3(2.2f, 0.55f, 0.12f));
+                SetMat(back, chair);
+                var leg = CreatePbCube("Leg", sofa.transform, new Vector3(0f, 0.08f, 0.2f), new Vector3(2f, 0.08f, 0.6f));
+                SetMat(leg, metal);
+            }
         }
 
         static void BuildElevatorBank(Transform parent, Material wall, Material metal, Material glass)
@@ -262,10 +275,23 @@ namespace PinkSoft.Aegis.Missions.Editor
             car.transform.SetParent(parent, false);
             car.transform.position = pos;
 
-            var body = CreatePbCube("Body", car.transform, Vector3.zero, new Vector3(1.9f, 0.75f, 4.2f));
-            SetMat(body, metal);
-            var cabin = CreatePbCube("Cabin", car.transform, new Vector3(0f, 0.55f, -0.3f), new Vector3(1.7f, 0.55f, 2f));
-            SetMat(cabin, metal);
+            var carPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Lobby_Car/scene.gltf");
+            if (carPrefab != null)
+            {
+                var inst = (GameObject)PrefabUtility.InstantiatePrefab(carPrefab);
+                inst.name = "Car_Visual";
+                inst.transform.SetParent(car.transform, false);
+                inst.transform.localPosition = new Vector3(0f, -0.55f, 0f);
+                inst.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+                inst.transform.localScale = Vector3.one * 0.013f;
+            }
+            else
+            {
+                var body = CreatePbCube("Body", car.transform, Vector3.zero, new Vector3(1.9f, 0.75f, 4.2f));
+                SetMat(body, metal);
+                var cabin = CreatePbCube("Cabin", car.transform, new Vector3(0f, 0.55f, -0.3f), new Vector3(1.7f, 0.55f, 2f));
+                SetMat(cabin, metal);
+            }
         }
 
         static void BuildBossPlazaGlass(Transform parent, Material glass, Material metal)

@@ -1,20 +1,21 @@
+#nullable enable
 using PinkSoft.MissionSDK;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace PinkSoft.Aegis.Missions
 {
-    /// <summary>스테이지 루트 — 테스트용 타겟 적중 또는 완료 트리거.</summary>
+    /// <summary>스테이지 씬 루트 — additive 로드 후 StageManager에 완료를 알립니다.</summary>
     public sealed class StageRoot : MonoBehaviour
     {
-        [SerializeField] StageManager stageManager = null!;
+        [SerializeField] StageManager? stageManager;
         [SerializeField] bool autoCompleteOnAllTargetsDisabled;
         [SerializeField] Key debugCompleteKey = Key.N;
 
         void Awake()
         {
             if (stageManager == null)
-                stageManager = GetComponentInParent<StageManager>(true);
+                stageManager = FindAnyObjectByType<StageManager>();
         }
 
         void Update()

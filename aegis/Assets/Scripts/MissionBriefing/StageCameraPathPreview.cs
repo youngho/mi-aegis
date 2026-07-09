@@ -20,7 +20,8 @@ namespace Aegis.UI
         {
             if (cameraPathRoot == null)
             {
-                var go = GameObject.Find("AegisMission/Stages/Stage1_Lobby/CameraPath_Stage1");
+                var go = GameObject.Find("Stage1_Lobby/CameraPath_Stage1")
+                         ?? GameObject.Find("AegisMission/Stages/Stage1_Lobby/CameraPath_Stage1");
                 cameraPathRoot = go != null ? go.transform : null;
             }
 

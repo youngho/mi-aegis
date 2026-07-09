@@ -14,7 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Aegis_Stages
   m_GUID: 70822b65112c64f2e901bb85f22923ce
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 129dfb4406ebd4e8690a0a95ccf19bac
+    m_Address: stage/4_core
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - stage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36027cd88bb5e409ea51eb8d51b29fae
+    m_Address: stage/1_lobby
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - stage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51acdf7567aaa41d79971aaafc79a0b7
+    m_Address: stage/3_datacenter
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - stage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67495666fdb204583b354da1f1fc2f34
+    m_Address: stage/2_lab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - stage
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ea200dbdb2f2b4cf2b48efb08b31c49e, type: 2}
   m_SchemaSet:

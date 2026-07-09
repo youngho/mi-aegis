@@ -136,8 +136,9 @@ mi-aegis/
     │   │   ├── Runtime/      # StageManager, AegisMissionController 등
     │   │   └── Prefabs/      # AegisMission.prefab
     │   ├── MissionSDK/       # mi Core SDK 인터페이스
-    │   ├── Stages/           # Stage1~4 씬 (레벨 지오메트리)
-    │   ├── Scenes/           # Mission Briefing, 통합 미션 씬
+    │   ├── Scenes/
+    │   │   ├── Stages/         # Stage1~4 스테이지 씬 (편집 + Stage1 플레이)
+    │   │   ├── AegisMissionFull.unity
     │   ├── Prefabs/BuildingKit/  # 스테이지별 모듈형 건물 키트
     │   └── AddressableAssetsData/  # 스테이지 Addressables 그룹
     └── Packages/manifest.json
@@ -164,20 +165,27 @@ mi-aegis/
 flowchart LR
     Bootstrap[AegisMissionBootstrap] --> Init[InitializeMission]
     Init --> SM[StageManager.Begin]
-    SM --> S1[Stage 1 Active]
-    S1 -->|NotifyStageComplete| S2[Stage 2]
-    S2 --> S3[Stage 3]
-    S3 --> S4[Stage 4]
-    S4 -->|OnAllStagesComplete| End[MissionResultData]
+    SM --> Load1[Additive Load Stage1_Lobby]
+    Load1 -->|NotifyStageComplete| Load2[Load Stage2_Lab]
+    Load2 --> Load3[Load Stage3]
+    Load3 --> Load4[Load Stage4]
+    Load4 -->|OnAllStagesComplete| End[MissionResultData]
 ```
 
-- `StageManager`: Stage 1~4 순차 활성화, 클리어 시 `TimeBonus` 이벤트 발행
-- `StageRoot`: 스테이지별 루트. 디버그 키(`N`)로 강제 클리어 가능
-- `AegisMissionController`: `IMissionController` 구현, 히트 판정·점수·타임리밋(기본 3600초)
+- `AegisMission.prefab`: **미션 셸만** 포함 (`AegisMissionController` + `StageManager`). 스테이지 지오메트리는 없음.
+- `StageManager`: Addressables로 스테이지 씬을 **additive load** → 클리어 시 unload → 다음 스테이지 로드.
+- 에디터 Play 모드: Addressables 빌드 없이 `editorScenePaths`로 `Assets/Scenes/Stages/*.unity`를 직접 로드.
+- `StageRoot`: 각 스테이지 씬 루트에 배치. `FindAnyObjectByType<StageManager>()`로 연결.
 
-### 6.2 스테이지 단위 작업 흐름
+### 6.2 씬 역할
 
-1. `Assets/Stages/StageN_*.unity` — 지오메트리·라이팅·VCam 배치
+| 씬 | 용도 |
+|---|---|
+| `Assets/Scenes/Stages/Stage1_Lobby.unity` | **Stage1** 편집 + 플레이 테스트 (미션 셸·Bootstrap 포함) |
+| `Assets/Scenes/AegisMissionFull.unity` | **4스테이지 통합** 플레이 테스트 |
+| `Assets/Scenes/Mission Briefing.unity` | 미션 브리핑 UI |
+
+1. `Assets/Scenes/Stages/StageN_*.unity` 를 열어 해당 스테이지만 편집합니다.
 2. 컷마다 빈 오브젝트 `Cut_1_1`, `Cut_1_2` … 하위에 스폰 포인트 배치
 3. 스폰 슬롯 네이밍: `spawn_L_far`, `spawn_C_near` 등 (L/C/R × far/near)
 4. 적 프리팹 콜라이더 이름 = `targetId` (점수 로그에 기록)
@@ -298,9 +306,10 @@ Stage 2~4도 동일 패턴으로 `StageNCameraController` 를 추가합니다.
 ### 실행
 
 1. Unity Hub에서 `aegis/` 폴더를 프로젝트로 엽니다.
-2. `Assets/Scenes/Mission Briefing.unity` 또는 `Assets/Stages/Stage1_Lobby.unity` 를 엽니다.
-3. Play — `DebugMissionInput` 으로 마우스 클릭 사격 테스트 가능합니다.
-4. 스테이지 강제 클리어: `StageRoot` 의 디버그 키 `N`
+2. **Stage1 작업/테스트:** `Assets/Scenes/Stages/Stage1_Lobby.unity` 를 열고 Play.
+3. **전체 미션 테스트:** `Assets/Scenes/AegisMissionFull.unity` → Play.
+4. `DebugMissionInput` 으로 마우스 클릭 사격 테스트. 스테이지 강제 클리어: `StageRoot` 디버그 키 `N`.
+5. Stage1 씬 재설정: 메뉴 **Aegis → Setup Stage1 Lobby Play Scene**.
 
 ### 관련 스크립트 진입점
 

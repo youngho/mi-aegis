@@ -1,7 +1,9 @@
 #if UNITY_EDITOR
+#nullable enable
 using System.IO;
 using System.Linq;
 using PinkSoft.Aegis.Missions;
+using PinkSoft.Aegis.Missions.Editor;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
@@ -21,47 +23,21 @@ namespace PinkSoft.Aegis.Editor
         [MenuItem("PinkSoft/AEGIS/Setup Mission (Prefab + Addressables)")]
         public static void SetupMission()
         {
-            EnsureFolder("Assets/Missions/Prefabs");
-            EnsureFolder("Assets/Stages");
+            StageArchitectureMigration.RebuildSlimMissionPrefab();
+            StageArchitectureMigration.PrepareStagePlaceholderScenes();
 
-            var prefab = CreateOrUpdateMissionPrefab();
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
             RegisterMissionAddressable(prefab);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Debug.Log($"[AEGIS] Mission prefab ready at {PrefabPath}, addressable address='{AddressableAddress}'.");
+            Debug.Log($"[AEGIS] Slim mission prefab at {PrefabPath}, addressable address='{AddressableAddress}'.");
         }
 
         [MenuItem("PinkSoft/AEGIS/Create Stage Placeholder Scenes")]
         public static void CreateStageScenes()
         {
-            EnsureFolder("Assets/Stages");
-
-            var stageNames = new[]
-            {
-                "Stage1_Lobby",
-                "Stage2_Lab",
-                "Stage3_Datacenter",
-                "Stage4_Core"
-            };
-
-            foreach (var stageName in stageNames)
-            {
-                var scenePath = $"Assets/Stages/{stageName}.unity";
-                if (File.Exists(scenePath))
-                    continue;
-
-                var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-
-                CreatePlaceholderTarget(stageName, new Vector3(0f, 1f, 5f));
-                CreatePlaceholderTarget($"{stageName}_boss", new Vector3(2f, 1.5f, 7f));
-
-                EditorSceneManager.SaveScene(scene, scenePath);
-            }
-
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Debug.Log("[AEGIS] Stage placeholder scenes created under Assets/Stages/.");
+            StageArchitectureMigration.PrepareStagePlaceholderScenes();
         }
 
         [MenuItem("PinkSoft/AEGIS/Create Dev Test Scene")]
@@ -131,7 +107,7 @@ namespace PinkSoft.Aegis.Editor
                 Path.Combine(projectRoot, "Library", "com.unity.addressables", "aa", "OSX"),
             };
 
-            string source = null;
+            string? source = null;
             foreach (var root in searchRoots)
             {
                 if (!Directory.Exists(root))
@@ -154,38 +130,6 @@ namespace PinkSoft.Aegis.Editor
             var dest = Path.Combine(destDir, bundleName);
             File.Copy(source, dest, true);
             Debug.Log($"[AEGIS] Copied bundle to mi: {dest}");
-        }
-
-        static GameObject CreateOrUpdateMissionPrefab()
-        {
-            var root = new GameObject("AegisMission");
-            root.AddComponent<AegisMissionController>();
-            var stageManager = root.AddComponent<StageManager>();
-
-            var stagesParent = new GameObject("Stages");
-            stagesParent.transform.SetParent(root.transform, false);
-
-            var stageObjects = new GameObject[4];
-            var stageNames = new[] { "Stage1_Lobby", "Stage2_Lab", "Stage3_Datacenter", "Stage4_Core" };
-            for (var i = 0; i < stageNames.Length; i++)
-            {
-                var stage = new GameObject(stageNames[i]);
-                stage.transform.SetParent(stagesParent.transform, false);
-                stage.AddComponent<StageRoot>();
-                CreatePlaceholderTarget($"enemy_{stageNames[i]}_01", new Vector3(0f, 1f, 5f), stage.transform);
-                stage.SetActive(false);
-                stageObjects[i] = stage;
-            }
-
-            var serializedStageManager = new SerializedObject(stageManager);
-            serializedStageManager.FindProperty("stages").arraySize = stageObjects.Length;
-            for (var i = 0; i < stageObjects.Length; i++)
-                serializedStageManager.FindProperty("stages").GetArrayElementAtIndex(i).objectReferenceValue = stageObjects[i];
-            serializedStageManager.ApplyModifiedPropertiesWithoutUndo();
-
-            var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
-            Object.DestroyImmediate(root);
-            return prefab;
         }
 
         static void RegisterMissionAddressable(GameObject prefab)
@@ -224,16 +168,6 @@ namespace PinkSoft.Aegis.Editor
             }
 
             return group;
-        }
-
-        static void CreatePlaceholderTarget(string name, Vector3 localPosition, Transform parent = null)
-        {
-            var target = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            target.name = name;
-            target.transform.SetParent(parent, false);
-            target.transform.localPosition = localPosition;
-            target.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            target.layer = LayerMask.NameToLayer("Default");
         }
 
         static void EnsureFolder(string path)

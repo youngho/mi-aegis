@@ -282,14 +282,16 @@ namespace PinkSoft.Aegis.Missions.Editor
                 enemy.name = name;
                 enemy.transform.SetParent(parent, false);
                 enemy.transform.position = worldPos;
+                
+                // Combine prefab's default rotation with Y-rotation to keep model standing upright
+                enemy.transform.localRotation = prefab.transform.localRotation * Quaternion.Euler(0f, 180f, 0f);
+
                 if (name.Contains("hostage"))
                 {
-                    enemy.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
                     enemy.transform.localScale = Vector3.one;
                 }
                 else
                 {
-                    enemy.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
                     enemy.transform.localScale = Vector3.one * 0.009f;
                 }
             }

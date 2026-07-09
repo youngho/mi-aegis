@@ -281,17 +281,20 @@ namespace PinkSoft.Aegis.Missions.Editor
                 Undo.RegisterCreatedObjectUndo(enemy, "Create " + name);
                 enemy.name = name;
                 enemy.transform.SetParent(parent, false);
+                
+                Quaternion spawnRotation = enemy.transform.localRotation;
                 enemy.transform.position = worldPos;
                 
-                // Combine prefab's default rotation with Y-rotation to keep model standing upright
-                enemy.transform.localRotation = prefab.transform.localRotation * Quaternion.Euler(0f, 180f, 0f);
-
                 if (name.Contains("hostage"))
                 {
+                    // Hostage prefab has correct upright axes; just apply Y-rotation relative to spawn
+                    enemy.transform.localRotation = spawnRotation * Quaternion.Euler(0f, 180f, 0f);
                     enemy.transform.localScale = Vector3.one;
                 }
                 else
                 {
+                    // Soldier prefab has mismatched axes; rotate X by -90 to keep it upright
+                    enemy.transform.localRotation = Quaternion.Euler(-90f, 180f, 0f);
                     enemy.transform.localScale = Vector3.one * 0.009f;
                 }
             }

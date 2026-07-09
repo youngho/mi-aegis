@@ -192,7 +192,7 @@ namespace PinkSoft.Aegis.Missions.Editor
                 inst.transform.localPosition = Vector3.zero;
                 // Correct glTF axis rotation offset
                 inst.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-                inst.transform.localScale = Vector3.one * 1.35f;
+                inst.transform.localScale = Vector3.one * 0.45f;
             }
             else
             {

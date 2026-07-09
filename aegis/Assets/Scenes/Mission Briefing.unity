@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cdf47f8c1364b86a8d161c8c526015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Aegis.UI.MissionBriefingController
-  nextSceneName: 
+  nextSceneName: AegisMissionFull
   briefing: "AGENT,\n\n3\uB144 \uC804, \uB125\uC0AC \uCF54\uC5B4(Nexa Core)\uB294
     \uB3C4\uC2DC \uCE58\uC548 \uC2DC\uC2A4\uD15C\uC744 \uCD1D\uAD04\uD558\uB294 \uCC28\uC138\uB300
     \uC778\uACF5\uC9C0\uB2A5 '\uC774\uC9C0\uC2A4(AEGIS)'\uB97C \uAC1C\uBC1C\uD588\uB2E4.

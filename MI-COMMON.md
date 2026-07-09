@@ -9,6 +9,7 @@ mi-aegis(AEGIS)는 [mi](https://github.com/pinksoft/mi) 프로젝트(PinkSoft Mi
 | mi | [`docs/mission-sdk-v1.md`](../mi/docs/mission-sdk-v1.md) | Mission SDK v1 스펙 |
 | mi | [`docs/decisions/addressables.md`](../mi/docs/decisions/addressables.md) | Addressables 채택 ADR |
 | mi-aegis | [`README.md`](README.md) | AEGIS 게임 개요 |
+| mi-aegis | [`docs/design/scene_flow.md`](docs/design/scene_flow.md) | 씬·스테이지 전환 흐름 |
 | mi-aegis | [`docs/stages/`](docs/stages/) | Stage 1~4 상세 기획 |
 
 ---

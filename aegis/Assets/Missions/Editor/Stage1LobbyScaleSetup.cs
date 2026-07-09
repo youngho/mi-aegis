@@ -25,6 +25,7 @@ namespace PinkSoft.Aegis.Missions.Editor
             {
                 EditorSceneManager.OpenScene(Stage1ScenePath, OpenSceneMode.Single);
                 Stage1SceneSetup.SetupActiveScene();
+                Stage1LobbyArchitectureSetup.BuildArchitecture(GameObject.Find("Stage1_Lobby")!.transform);
                 Stage1LobbyVisualSetup.ApplyToActiveScene();
                 Stage1LobbyExteriorSetup.BuildExteriorAndPostProcess();
                 EditorSceneManager.SaveScene(SceneManager.GetActiveScene());

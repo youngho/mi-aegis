@@ -20,6 +20,22 @@ namespace PinkSoft.Aegis.Missions
         /// <summary>2층 발코니 컷 카메라 look-at / 스폰 고도.</summary>
         public const float BalconyHeight = 7.5f;
 
+        /// <summary>2층 메자닌 바닥면 높이.</summary>
+        public const float MezzanineFloorY = 7f;
+
+        /// <summary>발코니 난간 상단 높이.</summary>
+        public static float MezzanineRailingTopY => BalconyHeight + 0.35f;
+
+        public const float MezzanineDeckThickness = 0.22f;
+
+        /// <summary>로비 후면(엘리베이터) Z.</summary>
+        public const float BackWallZ = 15f;
+
+        /// <summary>주차장 연장 구역 시작 Z.</summary>
+        public const float ParkingStartZ = 15.5f;
+
+        public const float ElevatorDoorHeight = 3.8f;
+
         /// <summary>공중 드론 스폰 고도.</summary>
         public const float DroneAirHeight = 6.5f;
 

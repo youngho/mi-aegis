@@ -63,28 +63,41 @@ namespace PinkSoft.Aegis.Missions
 
         private void SetupVirtualCameras()
         {
-            // Try to find existing cameras or create them if they do not exist
             for (int i = 0; i < 7; i++)
             {
+                var createdNew = false;
+
                 if (virtualCameras[i] == null)
                 {
                     var childTrans = transform.Find(_cameraNames[i]);
-                    var camGo = childTrans != null ? childTrans.gameObject : null;
-                    if (camGo != null)
+                    if (childTrans != null)
                     {
-                        virtualCameras[i] = camGo.GetComponent<CinemachineCamera>();
+                        virtualCameras[i] = childTrans.GetComponent<CinemachineCamera>();
                     }
                     else
                     {
-                        camGo = new GameObject(_cameraNames[i]);
+                        var camGo = new GameObject(_cameraNames[i]);
                         camGo.transform.SetParent(transform);
                         virtualCameras[i] = camGo.AddComponent<CinemachineCamera>();
+                        createdNew = true;
                     }
                 }
 
-                // Apply initial settings for each camera point
-                ConfigureCameraPreset(i, virtualCameras[i]);
+                if (virtualCameras[i] == null)
+                    continue;
+
+                if (createdNew)
+                    ConfigureCameraPreset(i, virtualCameras[i]);
+                else
+                    ResetCameraPriority(virtualCameras[i]);
             }
+        }
+
+        static void ResetCameraPriority(CinemachineCamera vcam)
+        {
+            var priority = vcam.Priority;
+            priority.Value = 10;
+            vcam.Priority = priority;
         }
 
         private void ConfigureCameraPreset(int index, CinemachineCamera vcam)
@@ -123,9 +136,7 @@ namespace PinkSoft.Aegis.Missions
             }
 
             // Set priority struct
-            var priority = vcam.Priority;
-            priority.Value = 10;
-            vcam.Priority = priority;
+            ResetCameraPriority(vcam);
         }
 
         private void Update()

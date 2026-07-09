@@ -41,6 +41,7 @@ namespace PinkSoft.Aegis.Missions.Editor
             RemoveBrokenChildren(stage1);
             EnsureEnvironment(stage1);
             EnsureCameraPath(stage1);
+            Stage1LobbyArchitectureSetup.BuildArchitecture(stage1);
         }
 
         static void RemoveBrokenChildren(Transform stage1)

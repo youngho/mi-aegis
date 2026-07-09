@@ -187,16 +187,31 @@ namespace PinkSoft.Aegis.Missions.Editor
             CreateEnemy(cut.transform, "boss_apc_grenade_L", new Vector3(-3.5f, 2f, 9.5f), BossColor, new Vector3(0.8f, 0.8f, 0.8f));
             CreateEnemy(cut.transform, "boss_apc_cockpit_R", new Vector3(3f, 1.5f, 9f), BossColor, new Vector3(1f, 1f, 1.2f));
 
-            var apcBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Undo.RegisterCreatedObjectUndo(apcBody, "Create APC Body");
-            apcBody.name = "APC_Body_Visual";
-            apcBody.transform.SetParent(cut.transform, false);
-            apcBody.transform.localPosition = new Vector3(0f, 1.2f, 10f);
-            apcBody.transform.localScale = new Vector3(4f, 2f, 6f);
-            apcBody.GetComponent<Collider>().enabled = false;
-            var renderer = apcBody.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.sharedMaterial = CreateMat(new Color(0.15f, 0.15f, 0.18f));
+            GameObject apcBody = null;
+            var apcPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/ARX_APC/scene.gltf");
+            if (apcPrefab != null)
+            {
+                apcBody = (GameObject)PrefabUtility.InstantiatePrefab(apcPrefab);
+                Undo.RegisterCreatedObjectUndo(apcBody, "Create APC Body");
+                apcBody.name = "APC_Body_Visual";
+                apcBody.transform.SetParent(cut.transform, false);
+                apcBody.transform.localPosition = new Vector3(0f, 0.0f, 10f);
+                apcBody.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+                apcBody.transform.localScale = Vector3.one * 0.55f;
+            }
+            else
+            {
+                apcBody = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Undo.RegisterCreatedObjectUndo(apcBody, "Create APC Body");
+                apcBody.name = "APC_Body_Visual";
+                apcBody.transform.SetParent(cut.transform, false);
+                apcBody.transform.localPosition = new Vector3(0f, 1.2f, 10f);
+                apcBody.transform.localScale = new Vector3(4f, 2f, 6f);
+                apcBody.GetComponent<Collider>().enabled = false;
+                var renderer = apcBody.GetComponent<Renderer>();
+                if (renderer != null)
+                    renderer.sharedMaterial = CreateMat(new Color(0.15f, 0.15f, 0.18f));
+            }
         }
 
         static void BuildTransition(Transform parent, string name, Vector3 pos, string note)
@@ -248,16 +263,49 @@ namespace PinkSoft.Aegis.Missions.Editor
 
         static void CreateEnemy(Transform parent, string name, Vector3 worldPos, Color color, Vector3? scale = null)
         {
-            var enemy = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Undo.RegisterCreatedObjectUndo(enemy, "Create " + name);
-            enemy.name = name;
-            enemy.transform.SetParent(parent, false);
-            enemy.transform.position = worldPos;
-            enemy.transform.localScale = scale ?? new Vector3(0.6f, 1.2f, 0.4f);
+            GameObject enemy = null;
+            string prefabPath = null;
 
-            var renderer = enemy.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.sharedMaterial = CreateMat(color);
+            if (name.Contains("hostage"))
+                prefabPath = "Assets/Prefabs/Hostage_Prisoner/scene.gltf";
+            else if (!name.Contains("drone") && !name.Contains("apc"))
+                prefabPath = "Assets/Prefabs/Soldier_Grunt/scene.gltf";
+
+            GameObject prefab = !string.IsNullOrEmpty(prefabPath) 
+                ? UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) 
+                : null;
+
+            if (prefab != null)
+            {
+                enemy = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                Undo.RegisterCreatedObjectUndo(enemy, "Create " + name);
+                enemy.name = name;
+                enemy.transform.SetParent(parent, false);
+                enemy.transform.position = worldPos;
+                if (name.Contains("hostage"))
+                {
+                    enemy.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+                    enemy.transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    enemy.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+                    enemy.transform.localScale = Vector3.one * 0.009f;
+                }
+            }
+            else
+            {
+                enemy = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Undo.RegisterCreatedObjectUndo(enemy, "Create " + name);
+                enemy.name = name;
+                enemy.transform.SetParent(parent, false);
+                enemy.transform.position = worldPos;
+                enemy.transform.localScale = scale ?? new Vector3(0.6f, 1.2f, 0.4f);
+
+                var renderer = enemy.GetComponent<Renderer>();
+                if (renderer != null)
+                    renderer.sharedMaterial = CreateMat(color);
+            }
         }
 
         static Material CreateMat(Color color)
@@ -329,6 +377,46 @@ namespace PinkSoft.Aegis.Missions.Editor
                     vcam.Priority = priority;
                 }
             }
+
+            EnsureStage1CameraController(cameraPath);
+        }
+
+        static void EnsureStage1CameraController(Transform cameraPath)
+        {
+            var ctrl = cameraPath.GetComponent<Stage1CameraController>();
+            if (ctrl == null)
+                ctrl = Undo.AddComponent<Stage1CameraController>(cameraPath.gameObject);
+
+            var names = new[]
+            {
+                "Vcam_1_1_Entrance",
+                "Vcam_1_2_Reception",
+                "Vcam_1_3_Balcony",
+                "Vcam_1_4_Corridor",
+                "Vcam_1_5_ElevatorLobby",
+                "Vcam_1_6_ParkingLot",
+                "Vcam_1_7_Boss",
+            };
+
+            var so = new SerializedObject(ctrl);
+            var camerasProp = so.FindProperty("virtualCameras");
+            camerasProp.arraySize = names.Length;
+
+            for (var i = 0; i < names.Length; i++)
+            {
+                CinemachineCamera? vcam = null;
+                var child = cameraPath.Find(names[i]);
+                if (child != null)
+                    vcam = child.GetComponent<CinemachineCamera>();
+
+                camerasProp.GetArrayElementAtIndex(i).objectReferenceValue = vcam;
+            }
+
+            var mission = Object.FindAnyObjectByType<AegisMissionController>();
+            if (mission != null)
+                so.FindProperty("missionController").objectReferenceValue = mission;
+
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         static void EnsureStageRoot(GameObject stage1)

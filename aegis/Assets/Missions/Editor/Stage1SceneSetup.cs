@@ -183,9 +183,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-4f, 1.8f, 9f));
             CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(4f, 1.8f, 9f));
 
-            CreateEnemy(cut.transform, "boss_apc_turret_C", new Vector3(0f, 2.8f, 10f), BossColor, new Vector3(1.2f, 0.8f, 1.2f));
-            CreateEnemy(cut.transform, "boss_apc_grenade_L", new Vector3(-3.5f, 2f, 9.5f), BossColor, new Vector3(0.8f, 0.8f, 0.8f));
-            CreateEnemy(cut.transform, "boss_apc_cockpit_R", new Vector3(3f, 1.5f, 9f), BossColor, new Vector3(1f, 1f, 1.2f));
+            CreateEnemy(cut.transform, "boss_apc_turret_C", new Vector3(0f, 2.8f, 18.2f), BossColor, new Vector3(1.2f, 0.8f, 1.2f));
+            CreateEnemy(cut.transform, "boss_apc_grenade_L", new Vector3(-1.0f, 1.8f, 19.5f), BossColor, new Vector3(0.8f, 0.8f, 0.8f));
+            CreateEnemy(cut.transform, "boss_apc_cockpit_R", new Vector3(1.0f, 1.2f, 19.5f), BossColor, new Vector3(1f, 1f, 1.2f));
 
             GameObject apcBody = null;
             var apcPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/ARX_APC/scene.gltf");
@@ -268,6 +268,8 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             if (name.Contains("hostage"))
                 prefabPath = "Assets/Prefabs/Hostage_Prisoner/scene.gltf";
+            else if (name.Contains("cockpit"))
+                prefabPath = "Assets/Prefabs/APC_Cockpit/APC_Cockpit/scene.gltf";
             else if (!name.Contains("drone") && !name.Contains("apc"))
                 prefabPath = "Assets/Prefabs/Soldier_Grunt/scene.gltf";
 
@@ -290,6 +292,12 @@ namespace PinkSoft.Aegis.Missions.Editor
                     // Hostage prefab has correct upright axes; just apply Y-rotation relative to spawn
                     enemy.transform.localRotation = spawnRotation * Quaternion.Euler(0f, 180f, 0f);
                     enemy.transform.localScale = Vector3.one;
+                }
+                else if (name.Contains("cockpit"))
+                {
+                    // Spaceship cockpit visual alignment and scaling to fit boss APC scale
+                    enemy.transform.localRotation = spawnRotation * Quaternion.Euler(0f, 180f, 0f);
+                    enemy.transform.localScale = Vector3.one * 0.15f;
                 }
                 else
                 {

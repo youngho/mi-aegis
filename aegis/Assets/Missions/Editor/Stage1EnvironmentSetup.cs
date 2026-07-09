@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using PinkSoft.Aegis.Missions;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,12 +28,12 @@ namespace PinkSoft.Aegis.Missions.Editor
 
         static readonly Vector3[] ExtraColumnPositions =
         {
-            new(-10f, 2.5f, -5f),
-            new(10f, 2.5f, -5f),
-            new(-10f, 2.5f, 2f),
-            new(10f, 2.5f, 2f),
-            new(-10f, 2.5f, 10f),
-            new(10f, 2.5f, 10f),
+            new(-10f, Stage1LobbyDimensions.ColumnCenterY, -5f),
+            new(10f, Stage1LobbyDimensions.ColumnCenterY, -5f),
+            new(-10f, Stage1LobbyDimensions.ColumnCenterY, 2f),
+            new(10f, Stage1LobbyDimensions.ColumnCenterY, 2f),
+            new(-10f, Stage1LobbyDimensions.ColumnCenterY, 10f),
+            new(10f, Stage1LobbyDimensions.ColumnCenterY, 10f),
         };
 
         public static void RepairStage1Lobby(Transform stage1)

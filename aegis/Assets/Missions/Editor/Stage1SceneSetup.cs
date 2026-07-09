@@ -113,15 +113,15 @@ namespace PinkSoft.Aegis.Missions.Editor
         static void BuildCut1_3(Transform parent)
         {
             var cut = CreateCut(parent, "Cut_1_3_Balcony", new Vector3(0f, 0f, -2f), "1-3 발코니 앙각 | 저격×2 드론×2");
-            CreateSpawnSlot(cut.transform, "spawn_L_far", new Vector3(-8f, 4.2f, 0f));
-            CreateSpawnSlot(cut.transform, "spawn_R_far", new Vector3(8f, 4.2f, 0f));
-            CreateSpawnSlot(cut.transform, "spawn_air_R", new Vector3(6f, 3.8f, -1f));
-            CreateSpawnSlot(cut.transform, "spawn_air_L", new Vector3(-4f, 3.5f, 1f));
+            CreateSpawnSlot(cut.transform, "spawn_L_far", new Vector3(-8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 0f));
+            CreateSpawnSlot(cut.transform, "spawn_R_far", new Vector3(8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 0f));
+            CreateSpawnSlot(cut.transform, "spawn_air_R", new Vector3(6f, Stage1LobbyDimensions.DroneAirHeight - 0.3f, -1f));
+            CreateSpawnSlot(cut.transform, "spawn_air_L", new Vector3(-4f, Stage1LobbyDimensions.DroneAirHeight, 1f));
 
-            CreateEnemy(cut.transform, "sniper_L_far", new Vector3(-8f, 4.2f, 0f), SniperColor);
-            CreateEnemy(cut.transform, "sniper_R_far", new Vector3(8f, 4.2f, 0f), SniperColor);
-            CreateEnemy(cut.transform, "drone_air_R", new Vector3(6f, 3.8f, -1f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
-            CreateEnemy(cut.transform, "drone_air_L", new Vector3(-4f, 3.5f, 1f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "sniper_L_far", new Vector3(-8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 0f), SniperColor);
+            CreateEnemy(cut.transform, "sniper_R_far", new Vector3(8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 0f), SniperColor);
+            CreateEnemy(cut.transform, "drone_air_R", new Vector3(6f, Stage1LobbyDimensions.DroneAirHeight - 0.3f, -1f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "drone_air_L", new Vector3(-4f, Stage1LobbyDimensions.DroneAirHeight, 1f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
         }
 
         static void BuildCut1_4(Transform parent)
@@ -171,9 +171,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             CreateEnemy(cut.transform, "grunt_park_C_01", new Vector3(0f, 1f, 14.5f), GruntColor);
             CreateEnemy(cut.transform, "grunt_park_C_02", new Vector3(0f, 1f, 16.5f), GruntColor);
             CreateEnemy(cut.transform, "grunt_park_R", new Vector3(5f, 1f, 15f), GruntColor);
-            CreateEnemy(cut.transform, "drone_park_L", new Vector3(-4f, 3.2f, 16f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
-            CreateEnemy(cut.transform, "drone_park_C", new Vector3(0f, 3.5f, 17f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
-            CreateEnemy(cut.transform, "drone_park_R", new Vector3(4f, 3f, 15.5f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "drone_park_L", new Vector3(-4f, Stage1LobbyDimensions.DroneAirHeight - 0.3f, 16f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "drone_park_C", new Vector3(0f, Stage1LobbyDimensions.DroneAirHeight, 17f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "drone_park_R", new Vector3(4f, Stage1LobbyDimensions.DroneAirHeight - 0.5f, 15.5f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
         }
 
         static void BuildCut1_7(Transform parent)
@@ -292,13 +292,13 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             var presets = new (string name, Vector3 pos, Vector3 lookAt, float fov)[]
             {
-                ("Vcam_1_1_Entrance", new Vector3(0f, 2.1f, -20f), new Vector3(0f, 1.5f, -13f), 42f),
-                ("Vcam_1_2_Reception", new Vector3(0f, 2f, -11f), new Vector3(0f, 1.2f, -6f), 38f),
-                ("Vcam_1_3_Balcony", new Vector3(0f, 0.8f, -4f), new Vector3(0f, 4f, 0f), 45f),
-                ("Vcam_1_4_Corridor", new Vector3(0f, 2f, -10f), new Vector3(0f, 1.5f, 2f), 40f),
-                ("Vcam_1_5_ElevatorLobby", new Vector3(0f, 2f, 10f), new Vector3(0f, 2f, 14f), 40f),
-                ("Vcam_1_6_ParkingLot", new Vector3(0f, 3.5f, 14f), new Vector3(0f, 1f, 18f), 44f),
-                ("Vcam_1_7_Boss", new Vector3(0f, 1.8f, 4f), new Vector3(0f, 2f, 10f), 36f),
+                ("Vcam_1_1_Entrance", new Vector3(0f, 3.5f, -20f), new Vector3(0f, 2.5f, -13f), 42f),
+                ("Vcam_1_2_Reception", new Vector3(0f, 3.2f, -11f), new Vector3(0f, 1.8f, -6f), 38f),
+                ("Vcam_1_3_Balcony", new Vector3(0f, 2.5f, -4f), new Vector3(0f, Stage1LobbyDimensions.BalconyHeight, 0f), 45f),
+                ("Vcam_1_4_Corridor", new Vector3(0f, 3.5f, -10f), new Vector3(0f, 2.5f, 2f), 40f),
+                ("Vcam_1_5_ElevatorLobby", new Vector3(0f, 3.5f, 10f), new Vector3(0f, 3f, 14f), 40f),
+                ("Vcam_1_6_ParkingLot", new Vector3(0f, 5.5f, 14f), new Vector3(0f, 2f, 18f), 44f),
+                ("Vcam_1_7_Boss", new Vector3(0f, 3.2f, 4f), new Vector3(0f, 3f, 10f), 36f),
             };
 
             for (var i = 0; i < presets.Length; i++)

@@ -311,6 +311,7 @@ Stage 2~4도 동일 패턴으로 `StageNCameraController` 를 추가합니다.
 
 1. Unity Hub에서 `aegis/` 폴더를 프로젝트로 엽니다.
 2. **Stage1 작업/테스트:** `Assets/Scenes/Stages/Stage1_Lobby.unity` 를 열고 Play.
+3. **Stage1 비주얼 재적용:** **Aegis → Apply Stage1 Lobby Visuals** (텍스처·조명·외관·Bloom) 또는 **Aegis → Build Stage1 Lobby Exterior**.
 3. **전체 미션 테스트:** `Assets/Scenes/AegisMissionFull.unity` → Play.
 4. `DebugMissionInput` 으로 마우스 클릭 사격 테스트. 스테이지 강제 클리어: `StageRoot` 디버그 키 `N`.
 5. Stage1 씬 재설정: 메뉴 **Aegis → Setup Stage1 Lobby Play Scene**.

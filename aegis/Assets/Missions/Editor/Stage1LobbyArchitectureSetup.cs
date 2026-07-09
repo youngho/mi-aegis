@@ -179,8 +179,26 @@ namespace PinkSoft.Aegis.Missions.Editor
             BuildSofa(seating.transform, "Sofa_L", new Vector3(-3.5f, 0.35f, -7f), chair, metal);
             BuildSofa(seating.transform, "Sofa_R", new Vector3(3.5f, 0.35f, -7f), chair, metal);
 
-            var coffeeTable = CreatePbCube("CoffeeTable", seating.transform, new Vector3(0f, 0.28f, -8.2f), new Vector3(1.6f, 0.06f, 0.8f));
-            SetMat(coffeeTable, metal);
+            var coffeeTable = new GameObject("CoffeeTable");
+            coffeeTable.transform.SetParent(seating.transform, false);
+            coffeeTable.transform.position = new Vector3(0f, 0.3f, -7.5f);
+
+            var tablePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Noguchi_Table/Noguchi_Table/scene.gltf");
+            if (tablePrefab != null)
+            {
+                var inst = (GameObject)PrefabUtility.InstantiatePrefab(tablePrefab);
+                inst.name = "Table_Visual";
+                inst.transform.SetParent(coffeeTable.transform, false);
+                inst.transform.localPosition = Vector3.zero;
+                // Correct glTF axis rotation offset
+                inst.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                inst.transform.localScale = Vector3.one * 1.35f;
+            }
+            else
+            {
+                var fallback = CreatePbCube("Table_Visual", coffeeTable.transform, Vector3.zero, new Vector3(1.6f, 0.06f, 0.8f));
+                SetMat(fallback, metal);
+            }
         }
 
         static void BuildSofa(Transform parent, string name, Vector3 pos, Material chair, Material metal)

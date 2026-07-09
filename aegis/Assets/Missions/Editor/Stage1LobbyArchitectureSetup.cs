@@ -183,7 +183,7 @@ namespace PinkSoft.Aegis.Missions.Editor
             coffeeTable.transform.SetParent(seating.transform, false);
             coffeeTable.transform.position = new Vector3(0f, 0.3f, -7.5f);
 
-            var tablePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Noguchi_Table/Noguchi_Table/scene.gltf");
+            var tablePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Modern_Table/Modern_Table/scene.gltf");
             if (tablePrefab != null)
             {
                 var inst = (GameObject)PrefabUtility.InstantiatePrefab(tablePrefab);
@@ -192,7 +192,7 @@ namespace PinkSoft.Aegis.Missions.Editor
                 inst.transform.localPosition = Vector3.zero;
                 // Correct glTF axis rotation offset
                 inst.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-                inst.transform.localScale = Vector3.one * 0.45f;
+                inst.transform.localScale = Vector3.one * 1.0f;
             }
             else
             {

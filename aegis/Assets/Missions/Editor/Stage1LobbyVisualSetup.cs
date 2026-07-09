@@ -218,8 +218,8 @@ namespace PinkSoft.Aegis.Missions.Editor
                 }
                 else if (t.name == "ExteriorSign_NexaCore")
                 {
-                    t.localRotation = Quaternion.Euler(0f, 180f, 0f);
-                    t.localScale = new Vector3(-8f, t.localScale.y, t.localScale.z);
+                    t.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                    t.localScale = new Vector3(8f, t.localScale.y, t.localScale.z);
                     PrefabUtility.RecordPrefabInstancePropertyModifications(t);
                 }
             }

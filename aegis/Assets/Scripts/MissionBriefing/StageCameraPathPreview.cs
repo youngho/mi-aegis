@@ -43,11 +43,11 @@ namespace Aegis.UI
 
         private void Update()
         {
-            // P: play/pause, R: restart
+            // P: play/pause, 0: restart
             if (Keyboard.current != null)
             {
                 if (Keyboard.current.pKey.wasPressedThisFrame) playing = !playing;
-                if (Keyboard.current.rKey.wasPressedThisFrame)
+                if (Keyboard.current.digit0Key.wasPressedThisFrame || Keyboard.current.numpad0Key.wasPressedThisFrame)
                 {
                     idx = 0;
                     if (points != null && points.Length > 0)

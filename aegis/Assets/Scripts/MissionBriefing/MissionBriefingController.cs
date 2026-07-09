@@ -63,6 +63,7 @@ namespace Aegis.UI
 
             root.RemoveFromClassList("root--ready");
             root.RemoveFromClassList("root--accepting");
+            typingComplete = false;
 
             if (briefingLabel != null) briefingLabel.text = "";
 
@@ -77,6 +78,8 @@ namespace Aegis.UI
             typing = null;
         }
 
+        private bool typingComplete;
+
         private void Update()
         {
             if (accepting) return;
@@ -84,9 +87,21 @@ namespace Aegis.UI
             var keyboard = Keyboard.current;
             if (keyboard == null) return;
 
+            if (keyboard.spaceKey.wasPressedThisFrame)
+            {
+                if (typingComplete)
+                    Accept();
+                else
+                    SkipTypewriter();
+                return;
+            }
+
             if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame)
             {
-                Accept();
+                if (typingComplete)
+                    Accept();
+                else
+                    SkipTypewriter();
             }
             else if (keyboard.escapeKey.wasPressedThisFrame)
             {
@@ -133,11 +148,27 @@ namespace Aegis.UI
             }
 
             if (acceptButton != null) acceptButton.SetEnabled(true);
+            typingComplete = true;
+        }
+
+        private void SkipTypewriter()
+        {
+            if (typing != null)
+            {
+                StopCoroutine(typing);
+                typing = null;
+            }
+
+            if (briefingLabel != null)
+                briefingLabel.text = briefing;
+
+            if (acceptButton != null) acceptButton.SetEnabled(true);
+            typingComplete = true;
         }
 
         private void Accept()
         {
-            if (accepting) return;
+            if (accepting || !typingComplete) return;
             accepting = true;
 
             if (acceptButton != null) acceptButton.SetEnabled(false);

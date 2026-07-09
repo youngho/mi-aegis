@@ -14,11 +14,21 @@ namespace PinkSoft.Aegis.Missions
         void Update()
         {
             var mouse = Mouse.current;
-            if (mouse == null || !mouse.leftButton.wasPressedThisFrame)
-                return;
+            var keyboard = Keyboard.current;
 
-            var pos = mouse.position.ReadValue();
-            OnHit?.Invoke(new InputHit(pos, (ulong)(Time.realtimeSinceStartup * 1_000_000)));
+            if (mouse != null && mouse.leftButton.wasPressedThisFrame)
+            {
+                EmitHit(mouse.position.ReadValue());
+                return;
+            }
+
+            if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
+                EmitHit(GetScreenCenter());
         }
+
+        static Vector2 GetScreenCenter() => new(Screen.width * 0.5f, Screen.height * 0.5f);
+
+        void EmitHit(Vector2 screenPosition) =>
+            OnHit?.Invoke(new InputHit(screenPosition, (ulong)(Time.realtimeSinceStartup * 1_000_000)));
     }
 }

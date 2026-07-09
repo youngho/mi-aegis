@@ -58,6 +58,8 @@ flowchart TB
 
 Reject는 현재 브리핑만 재시작합니다 (로비 복귀 없음).
 
+**PC 조작:** Enter/Space/클릭으로 Accept, Esc로 재시작, F1/H 도움말 — [README §3.5](../../README.md#35-pc-조작-마우스키보드).
+
 ### `AegisMissionFull.unity`
 
 - **역할:** 4스테이지 통합 플레이용 **미션 셸 씬** (지오메트리 없음).

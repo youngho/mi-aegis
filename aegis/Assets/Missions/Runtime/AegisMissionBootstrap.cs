@@ -17,6 +17,12 @@ namespace PinkSoft.Aegis.Missions
                 debugInput = GetComponent<DebugMissionInput>();
         }
 
+        public void Configure(AegisMissionController controller, DebugMissionInput input)
+        {
+            missionController = controller;
+            debugInput = input;
+        }
+
         void Start()
         {
             if (missionController == null || debugInput == null)

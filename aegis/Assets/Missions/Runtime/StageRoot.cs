@@ -10,7 +10,7 @@ namespace PinkSoft.Aegis.Missions
     {
         [SerializeField] StageManager? stageManager;
         [SerializeField] bool autoCompleteOnAllTargetsDisabled;
-        [SerializeField] Key debugCompleteKey = Key.F9;
+        [SerializeField] Key debugCompleteKey = Key.N;
 
         bool _completeNotified;
 
@@ -61,5 +61,8 @@ namespace PinkSoft.Aegis.Missions
             _completeNotified = true;
             stageManager.NotifyStageComplete();
         }
+
+        /// <summary>전역 단축키(N) 등에서 호출 — 현재 스테이지를 즉시 클리어합니다.</summary>
+        public void RequestDebugComplete() => NotifyCompleteOnce();
     }
 }

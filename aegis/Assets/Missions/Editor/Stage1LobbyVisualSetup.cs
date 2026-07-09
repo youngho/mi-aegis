@@ -38,16 +38,27 @@ namespace PinkSoft.Aegis.Missions.Editor
         public static void ApplyToActiveScene()
         {
             EnsureTexturesImported();
-            var floor = EnsureLitMat("M_Lobby_Floor", $"{TexFolder}/T_Lobby_Marble_Floor.png", 0f, 0.88f, new Vector2(8, 8));
-            var wall = EnsureLitMat("M_Lobby_Wall", $"{TexFolder}/T_Lobby_Wall_Panel.png", 0f, 0.25f, new Vector2(3, 2));
+            var floor = EnsureLitMat("M_Lobby_Floor", $"{TexFolder}/T_Lobby_Marble_Floor.png", 0f, 0.92f, new Vector2(8, 8));
+            var wall = EnsureLitMat("M_Lobby_Wall", $"{TexFolder}/T_Lobby_Wall_Panel.png", 0f, 0.15f, new Vector2(3, 2));
+            wall.SetColor("_BaseColor", new Color(0.88f, 0.88f, 0.88f, 1f));
             var ceiling = EnsureLitMat("M_Lobby_Ceiling", $"{TexFolder}/T_Lobby_Ceiling.png", 0f, 0.15f, new Vector2(4, 4));
-            var desk = EnsureLitMat("M_Lobby_Desk", $"{TexFolder}/T_Lobby_Metal_Brushed.png", 0.92f, 0.78f, new Vector2(2, 2));
-            var column = EnsureLitMat("M_Lobby_Column", $"{TexFolder}/T_Lobby_Column_Marble.png", 0f, 0.65f, new Vector2(1, 2));
+            
+            // Stone material for counters/backpanel (Plaza Stone)
+            var deskStone = EnsureLitMat("M_Lobby_Desk_Stone", $"{TexFolder}/T_Lobby_Plaza_Stone.png", 0f, 0.5f, new Vector2(2, 2));
+            deskStone.SetColor("_BaseColor", new Color(0.9f, 0.9f, 0.9f, 1f));
+
+            // Wood material for desk base (Dark Walnut brown)
+            var deskWood = EnsureLitMat("M_Lobby_Desk_Wood", null, 0f, 0.18f, Vector2.one);
+            deskWood.SetColor("_BaseColor", new Color(0.24f, 0.16f, 0.11f, 1f));
+
+            var column = EnsureLitMat("M_Lobby_Column", $"{TexFolder}/T_Lobby_Column_Marble.png", 0f, 0.88f, new Vector2(1, 2));
+            column.SetColor("_BaseColor", new Color(1f, 1f, 1f, 1f));
+
             var sign = EnsureEmissiveMat("M_Lobby_Sign", $"{TexFolder}/T_Lobby_NexaCore_Sign.png", 2.5f);
             var screen = EnsureEmissiveMat("M_Lobby_Aegis_Screen", $"{TexFolder}/T_Lobby_Aegis_Screen.png", 1.8f);
 
-            AssignMaterialInPrefabs(floor, wall, ceiling, desk, column, sign);
-            AssignMaterialsInScene(floor, wall, ceiling, desk, column, sign, screen);
+            AssignMaterialInPrefabs(floor, wall, ceiling, deskStone, deskWood, column, sign);
+            AssignMaterialsInScene(floor, wall, ceiling, deskStone, deskWood, column, sign, screen);
             SetupLightingAndProbes();
         }
 
@@ -125,17 +136,27 @@ namespace PinkSoft.Aegis.Missions.Editor
             return mat;
         }
 
-        static void AssignMaterialInPrefabs(Material floor, Material wall, Material ceiling, Material desk, Material column, Material sign)
+        static void AssignMaterialInPrefabs(Material floor, Material wall, Material ceiling, Material deskStone, Material deskWood, Material column, Material sign)
         {
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Floor.prefab", floor);
-            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Front.prefab", wall);
-            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Back.prefab", wall);
-            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Left.prefab", wall);
-            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Right.prefab", wall);
+            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall.prefab", wall);
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Ceiling.prefab", ceiling);
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Column.prefab", column);
-            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_ReceptionDesk.prefab", desk);
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Sign.prefab", sign);
+
+            var deskPath = "Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_ReceptionDesk.prefab";
+            var root = PrefabUtility.LoadPrefabContents(deskPath);
+            foreach (var r in root.GetComponentsInChildren<Renderer>(true))
+            {
+                var n = r.gameObject.name;
+                if (n.Contains("Countertop") || n.Contains("BackPanel"))
+                    r.sharedMaterial = deskStone;
+                else
+                    r.sharedMaterial = deskWood;
+            }
+
+            PrefabUtility.SaveAsPrefabAsset(root, deskPath);
+            PrefabUtility.UnloadPrefabContents(root);
         }
 
         static void SetPrefabMat(string prefabPath, Material mat)
@@ -153,7 +174,7 @@ namespace PinkSoft.Aegis.Missions.Editor
             PrefabUtility.UnloadPrefabContents(root);
         }
 
-        static void AssignMaterialsInScene(Material floor, Material wall, Material ceiling, Material desk, Material column, Material sign, Material screen)
+        static void AssignMaterialsInScene(Material floor, Material wall, Material ceiling, Material deskStone, Material deskWood, Material column, Material sign, Material screen)
         {
             foreach (var r in Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None))
             {
@@ -169,7 +190,12 @@ namespace PinkSoft.Aegis.Missions.Editor
                 else if (n.Contains("Column") || parent.Contains("Column"))
                     r.sharedMaterial = column;
                 else if (n.Contains("Desk") || n.Contains("Reception") || parent.Contains("Reception"))
-                    r.sharedMaterial = desk;
+                {
+                    if (n.Contains("Countertop") || n.Contains("BackPanel"))
+                        r.sharedMaterial = deskStone;
+                    else
+                        r.sharedMaterial = deskWood;
+                }
                 else if (n.Contains("Sign") || parent.Contains("Sign"))
                     r.sharedMaterial = sign;
             }
@@ -248,17 +274,17 @@ namespace PinkSoft.Aegis.Missions.Editor
             }
 
             RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(0.55f, 0.62f, 0.72f);
-            RenderSettings.ambientEquatorColor = new Color(0.35f, 0.38f, 0.42f);
-            RenderSettings.ambientGroundColor = new Color(0.18f, 0.19f, 0.21f);
-            RenderSettings.reflectionIntensity = 1.1f;
+            RenderSettings.ambientSkyColor = new Color(0.82f, 0.85f, 0.9f);
+            RenderSettings.ambientEquatorColor = new Color(0.68f, 0.7f, 0.74f);
+            RenderSettings.ambientGroundColor = new Color(0.48f, 0.5f, 0.52f);
+            RenderSettings.reflectionIntensity = 1.0f;
 
             EnsureReflectionProbe(
                 new Vector3(0f, Stage1LobbyDimensions.WallCenterY, 0f),
                 new Vector3(28f, Stage1LobbyDimensions.CeilingHeight + 2f, 28f));
-            EnsureAccentLight("Lobby_SignLight", new Vector3(0f, Stage1LobbyDimensions.BackSignCenterY, 11f), new Color(0.85f, 0.92f, 1f), 2.2f, 12f);
-            EnsureAccentLight("Lobby_ReceptionLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.6f, -4f), new Color(1f, 0.98f, 0.95f), 1.6f, 10f);
-            EnsureAccentLight("Lobby_EntranceLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.55f, -13f), new Color(0.9f, 0.95f, 1f), 1.2f, 8f);
+            EnsureAccentLight("Lobby_SignLight", new Vector3(0f, Stage1LobbyDimensions.BackSignCenterY, 11f), new Color(0.9f, 0.95f, 1f), 3.0f, 15f);
+            EnsureAccentLight("Lobby_ReceptionLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.6f, -4f), new Color(1f, 1f, 1f), 2.5f, 12f);
+            EnsureAccentLight("Lobby_EntranceLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.55f, -13f), new Color(0.95f, 0.98f, 1f), 2.2f, 10f);
         }
 
         static void EnsureReflectionProbe(Vector3 pos, Vector3 size)

@@ -27,7 +27,7 @@ namespace PinkSoft.Aegis.Missions
         bool _advancing;
         bool _useAddressablesScene;
         bool _embeddedStageActive;
-        string? _loadedSceneName;
+        Scene _loadedScene;
         SceneInstance _addressableScene;
 
         public event Action<int>? OnStageStarted;
@@ -83,7 +83,7 @@ namespace PinkSoft.Aegis.Missions
             if (_embeddedStageActive)
             {
                 _embeddedStageActive = false;
-                _loadedSceneName = null;
+                _loadedScene = default;
                 yield break;
             }
 
@@ -97,22 +97,18 @@ namespace PinkSoft.Aegis.Missions
 
                 _useAddressablesScene = false;
                 _addressableScene = default;
-                _loadedSceneName = null;
+                _loadedScene = default;
                 yield break;
             }
 
-            if (string.IsNullOrEmpty(_loadedSceneName))
+            if (!_loadedScene.IsValid() || !_loadedScene.isLoaded)
                 yield break;
 
-            var scene = SceneManager.GetSceneByName(_loadedSceneName);
-            if (scene.IsValid() && scene.isLoaded)
-            {
-                var op = SceneManager.UnloadSceneAsync(scene);
-                if (op != null)
-                    yield return op;
-            }
+            var op = SceneManager.UnloadSceneAsync(_loadedScene);
+            if (op != null)
+                yield return op;
 
-            _loadedSceneName = null;
+            _loadedScene = default;
         }
 
         IEnumerator LoadStageScene(int index, Action<bool> onDone)
@@ -127,7 +123,7 @@ namespace PinkSoft.Aegis.Missions
                     var sceneName = System.IO.Path.GetFileNameWithoutExtension(path);
                     if (IsStageOpenAsActiveScene(sceneName))
                     {
-                        _loadedSceneName = sceneName;
+                        _loadedScene = SceneManager.GetSceneByName(sceneName);
                         _embeddedStageActive = true;
                         _useAddressablesScene = false;
                         onDone(true);
@@ -143,13 +139,19 @@ namespace PinkSoft.Aegis.Missions
                     else
                         EditorSceneManager.LoadSceneInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Additive));
 
-                    if (SceneManager.GetSceneByName(sceneName).isLoaded)
+                    var loadedScene = SceneManager.GetSceneByName(sceneName);
+                    if (loadedScene.isLoaded)
                     {
-                        _loadedSceneName = sceneName;
+                        StripMissionShellObjects(loadedScene);
+                        _loadedScene = loadedScene;
                         _useAddressablesScene = false;
                         onDone(true);
                         yield break;
                     }
+
+                    Debug.LogError($"[StageManager] Editor load failed for '{path}'.");
+                    onDone(false);
+                    yield break;
                 }
             }
 #endif
@@ -158,7 +160,7 @@ namespace PinkSoft.Aegis.Missions
             var sceneNameFromAddress = GetSceneNameForIndex(index);
             if (!string.IsNullOrEmpty(sceneNameFromAddress) && IsStageOpenAsActiveScene(sceneNameFromAddress))
             {
-                _loadedSceneName = sceneNameFromAddress;
+                _loadedScene = SceneManager.GetSceneByName(sceneNameFromAddress);
                 _embeddedStageActive = true;
                 _useAddressablesScene = false;
                 onDone(true);
@@ -176,9 +178,30 @@ namespace PinkSoft.Aegis.Missions
             }
 
             _addressableScene = handle.Result;
-            _loadedSceneName = _addressableScene.Scene.name;
+            _loadedScene = _addressableScene.Scene;
+            StripMissionShellObjects(_loadedScene);
             _useAddressablesScene = true;
             onDone(true);
+        }
+
+        /// <summary>스테이지 씬에 포함된 기본 Main Camera·조명·미션 셸은 미션 셸 씬 것만 사용합니다.</summary>
+        static void StripMissionShellObjects(Scene stageScene)
+        {
+            if (!stageScene.IsValid())
+                return;
+
+            foreach (var root in stageScene.GetRootGameObjects())
+            {
+                switch (root.name)
+                {
+                    case "Main Camera":
+                    case "Directional Light":
+                    case "AegisMission":
+                    case "AegisMissionBootstrap":
+                        UnityEngine.Object.Destroy(root);
+                        break;
+                }
+            }
         }
 
         void OnDestroy()
@@ -188,12 +211,8 @@ namespace PinkSoft.Aegis.Missions
 
             if (_useAddressablesScene && _addressableScene.Scene.isLoaded)
                 Addressables.UnloadSceneAsync(_addressableScene);
-            else if (!string.IsNullOrEmpty(_loadedSceneName))
-            {
-                var scene = SceneManager.GetSceneByName(_loadedSceneName);
-                if (scene.IsValid() && scene.isLoaded)
-                    SceneManager.UnloadSceneAsync(scene);
-            }
+            else if (_loadedScene.IsValid() && _loadedScene.isLoaded)
+                SceneManager.UnloadSceneAsync(_loadedScene);
         }
 
         void ReportEvent(ScoreEventType eventType, string targetId) =>

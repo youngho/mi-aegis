@@ -10,7 +10,11 @@ namespace PinkSoft.Aegis.Missions
     {
         [SerializeField] StageManager? stageManager;
         [SerializeField] bool autoCompleteOnAllTargetsDisabled;
-        [SerializeField] Key debugCompleteKey = Key.N;
+        [SerializeField] Key debugCompleteKey = Key.F9;
+
+        bool _completeNotified;
+
+        void OnEnable() => _completeNotified = false;
 
         void Awake()
         {
@@ -20,14 +24,17 @@ namespace PinkSoft.Aegis.Missions
 
         void Update()
         {
-            if (stageManager == null || !isActiveAndEnabled)
+            if (stageManager == null || !isActiveAndEnabled || _completeNotified)
                 return;
 
             if (debugCompleteKey != Key.None)
             {
                 var keyboard = Keyboard.current;
                 if (keyboard != null && keyboard[debugCompleteKey].wasPressedThisFrame)
-                    stageManager.NotifyStageComplete();
+                {
+                    NotifyCompleteOnce();
+                    return;
+                }
             }
 
             if (!autoCompleteOnAllTargetsDisabled)
@@ -43,6 +50,15 @@ namespace PinkSoft.Aegis.Missions
                     return;
             }
 
+            NotifyCompleteOnce();
+        }
+
+        void NotifyCompleteOnce()
+        {
+            if (_completeNotified || stageManager == null)
+                return;
+
+            _completeNotified = true;
             stageManager.NotifyStageComplete();
         }
     }

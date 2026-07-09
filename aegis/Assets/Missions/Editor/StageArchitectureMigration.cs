@@ -367,6 +367,35 @@ namespace PinkSoft.Aegis.Missions.Editor
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
+        [MenuItem("Aegis/Strip Stage Scene Shell Objects")]
+        public static void StripStageSceneShellObjects()
+        {
+            foreach (var (scenePath, _, _) in StageDefs)
+            {
+                if (!File.Exists(scenePath))
+                    continue;
+
+                // Stage1_Lobby keeps Main Camera for standalone play-test.
+                var stripCamera = scenePath != Stage1ScenePath;
+
+                EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+                var scene = SceneManager.GetActiveScene();
+
+                foreach (var root in scene.GetRootGameObjects())
+                {
+                    if (!stripCamera && root.name is "Main Camera")
+                        continue;
+
+                    if (root.name is "Main Camera" or "Directional Light" or "AegisMission" or "AegisMissionBootstrap")
+                        Object.DestroyImmediate(root);
+                }
+
+                EditorSceneManager.SaveScene(scene);
+            }
+
+            Debug.Log("[StageArchitectureMigration] Stripped shell objects from stage scenes (Stage1 keeps Main Camera for standalone play).");
+        }
+
         [MenuItem("Aegis/Prepare Stage Placeholder Scenes")]
         public static void PrepareStagePlaceholderScenes()
         {
@@ -385,7 +414,7 @@ namespace PinkSoft.Aegis.Missions.Editor
 
                 if (!File.Exists(scenePath))
                 {
-                    var newScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+                    var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
                     var root = new GameObject(rootName);
                     root.AddComponent<StageRoot>();
                     CreatePlaceholderTarget($"enemy_{rootName}_01", new Vector3(0f, 1f, 5f), root.transform);

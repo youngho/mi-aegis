@@ -97,6 +97,7 @@ Begin / NotifyStageComplete
 | 2 | `stage/3_datacenter` | `Assets/Scenes/Stages/Stage3_Datacenter.unity` | `Stage3_Datacenter` |
 | 3 | `stage/4_core` | `Assets/Scenes/Stages/Stage4_Core.unity` | `Stage4_Core` |
 
+- **Additive 로드 시:** 스테이지 씬에 포함된 `Main Camera`·`Directional Light`·미션 셸 오브젝트는 `StageManager`가 런타임에 제거합니다 (미션 셸 씬의 카메라만 사용).
 - **에디터 Play:** `useEditorScenePathsInPlayMode`가 켜져 있으면 Addressables 빌드 없이 `editorScenePaths`로 직접 로드.
 - **빌드 / mi Core:** Addressables `LoadSceneAsync`로 additive 로드.
 
@@ -104,7 +105,7 @@ Begin / NotifyStageComplete
 
 각 스테이지 씬 루트의 `StageRoot`가 `StageManager`를 찾아 연결합니다.
 
-- **디버그:** 키 `N` → `NotifyStageComplete()` (다음 스테이지로 진행).
+- **디버그:** 키 `F9` → `NotifyStageComplete()` (다음 스테이지로 진행). `StageRoot` Inspector에서 변경 가능.
 - **자동:** `autoCompleteOnAllTargetsDisabled`가 켜져 있으면 모든 타겟 콜라이더 비활성 시 완료.
 
 Stage1 실제 웨이브·보스 클리어 조건은 아직 컷 시스템과 부분 연동 상태입니다. 상세 타임라인은 [`cut_timeline.md`](cut_timeline.md).

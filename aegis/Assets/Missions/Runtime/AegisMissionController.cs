@@ -25,6 +25,8 @@ namespace PinkSoft.Aegis.Missions
         public event Action<bool, MissionResultData>? OnMissionEnded;
         public event Action<MissionError>? OnError;
 
+        public float ElapsedTime => _elapsed;
+
         void Awake()
         {
             if (stageManager == null)

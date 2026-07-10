@@ -42,6 +42,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Left.prefab", new Vector3(-30f, Stage1LobbyDimensions.WallCenterY, 0f));
             SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Right.prefab", new Vector3(30f, Stage1LobbyDimensions.WallCenterY, 0f));
 
+            SetSimplePrefab($"{KitFolder}/PF_Lobby_Floor.prefab",
+                new Vector3(0f, 0f, 0f), new Vector3(60f, 0.2f, 60f));
+
             SetSimplePrefab($"{KitFolder}/PF_Lobby_Ceiling.prefab",
                 new Vector3(0f, Stage1LobbyDimensions.CeilingHeight, 0f), new Vector3(60f, 0.2f, 60f));
 

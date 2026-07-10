@@ -251,7 +251,7 @@ namespace PinkSoft.Aegis.Missions.Editor
                 sun.shadowStrength = 0.65f;
             }
 
-            EnsureAccentLight("Lobby_ExteriorRim", new Vector3(-8f, Stage1LobbyDimensions.ExteriorRimLightY, -22f), new Color(0.55f, 0.75f, 1f), 2.5f, 35f);
+            EnsureAccentLight("Lobby_ExteriorRim", new Vector3(-8f, Stage1LobbyDimensions.ExteriorRimLightY, -35f), new Color(0.55f, 0.75f, 1f), 2.5f, 35f);
         }
 
         static void HideSolidLeftWall()
@@ -265,21 +265,21 @@ namespace PinkSoft.Aegis.Missions.Editor
 
         static void BuildExteriorPlaza(Transform parent, LobbyMaterials m)
         {
-            var plaza = CreatePbCube("Plaza_Exterior", parent, new Vector3(0f, -0.05f, -22f), new Vector3(34f, 0.1f, 16f));
+            var plaza = CreatePbCube("Plaza_Exterior", parent, new Vector3(0f, -0.05f, -40f), new Vector3(64f, 0.1f, 20f));
             SetRendererMat(plaza, m.plaza);
 
             // plaza steps / threshold at entrance
-            var threshold = CreatePbCube("Plaza_Threshold", parent, new Vector3(0f, 0.05f, -15.6f), new Vector3(12f, 0.08f, 1.2f));
+            var threshold = CreatePbCube("Plaza_Threshold", parent, new Vector3(0f, 0.05f, -30.6f), new Vector3(16f, 0.08f, 1.2f));
             SetRendererMat(threshold, m.plaza);
         }
 
         static void BuildEntranceCanopy(Transform parent, LobbyMaterials m)
         {
-            var canopy = CreatePbCube("Entrance_Canopy", parent, new Vector3(0f, Stage1LobbyDimensions.ExteriorCanopyY, -15.8f), new Vector3(14f, 0.35f, 3.5f));
+            var canopy = CreatePbCube("Entrance_Canopy", parent, new Vector3(0f, Stage1LobbyDimensions.ExteriorCanopyY, -30.8f), new Vector3(18f, 0.35f, 4.5f));
             SetRendererMat(canopy, m.metal);
 
-            var frameL = CreatePbCube("Entrance_Frame_L", parent, new Vector3(-6.5f, Stage1LobbyDimensions.ExteriorFrameCenterY, -15.7f), new Vector3(0.35f, Stage1LobbyDimensions.ExteriorFrameHeight, 0.35f));
-            var frameR = CreatePbCube("Entrance_Frame_R", parent, new Vector3(6.5f, Stage1LobbyDimensions.ExteriorFrameCenterY, -15.7f), new Vector3(0.35f, Stage1LobbyDimensions.ExteriorFrameHeight, 0.35f));
+            var frameL = CreatePbCube("Entrance_Frame_L", parent, new Vector3(-9.0f, Stage1LobbyDimensions.ExteriorFrameCenterY, -30.7f), new Vector3(0.35f, Stage1LobbyDimensions.ExteriorFrameHeight, 0.35f));
+            var frameR = CreatePbCube("Entrance_Frame_R", parent, new Vector3(9.0f, Stage1LobbyDimensions.ExteriorFrameCenterY, -30.7f), new Vector3(0.35f, Stage1LobbyDimensions.ExteriorFrameHeight, 0.35f));
             SetRendererMat(frameL, m.metal);
             SetRendererMat(frameR, m.metal);
 
@@ -288,8 +288,8 @@ namespace PinkSoft.Aegis.Missions.Editor
             var door = doorPb.gameObject;
             door.name = "RevolvingDoor_Glass";
             door.transform.SetParent(parent, false);
-            door.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.ExteriorDoorCenterY, -15.2f);
-            door.transform.localScale = new Vector3(2.4f, Stage1LobbyDimensions.ExteriorDoorScaleY, 2.4f);
+            door.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.ExteriorDoorCenterY, -29.6f);
+            door.transform.localScale = new Vector3(3.2f, Stage1LobbyDimensions.ExteriorDoorScaleY, 3.2f);
             SetRendererMat(door, m.glass);
         }
 
@@ -300,21 +300,23 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             var panels = new[]
             {
-                new Vector3(-14.85f, Stage1LobbyDimensions.GlassFacadeCenterY, -4f),
-                new Vector3(-14.85f, Stage1LobbyDimensions.GlassFacadeCenterY, 4f),
-                new Vector3(-14.85f, Stage1LobbyDimensions.GlassFacadeCenterY, 12f),
+                new Vector3(-29.85f, Stage1LobbyDimensions.GlassFacadeCenterY, -20f),
+                new Vector3(-29.85f, Stage1LobbyDimensions.GlassFacadeCenterY, -10f),
+                new Vector3(-29.85f, Stage1LobbyDimensions.GlassFacadeCenterY, 0f),
+                new Vector3(-29.85f, Stage1LobbyDimensions.GlassFacadeCenterY, 10f),
+                new Vector3(-29.85f, Stage1LobbyDimensions.GlassFacadeCenterY, 20f),
             };
 
             foreach (var pos in panels)
             {
-                var panel = CreatePbCube("GlassPanel", facade.transform, pos, new Vector3(0.08f, Stage1LobbyDimensions.GlassPanelHeight, 7.5f));
+                var panel = CreatePbCube("GlassPanel", facade.transform, pos, new Vector3(0.08f, Stage1LobbyDimensions.GlassPanelHeight, 10.0f));
                 SetRendererMat(panel, m.glass);
             }
 
             // mullions
-            for (var z = -8f; z <= 14f; z += 7.5f)
+            for (var z = -25f; z <= 25f; z += 10.0f)
             {
-                var mullion = CreatePbCube("Mullion", facade.transform, new Vector3(-14.82f, Stage1LobbyDimensions.GlassFacadeCenterY, z), new Vector3(0.12f, Stage1LobbyDimensions.GlassPanelHeight + 0.1f, 0.15f));
+                var mullion = CreatePbCube("Mullion", facade.transform, new Vector3(-29.82f, Stage1LobbyDimensions.GlassFacadeCenterY, z), new Vector3(0.12f, Stage1LobbyDimensions.GlassPanelHeight + 0.1f, 0.15f));
                 SetRendererMat(mullion, m.metal);
             }
         }
@@ -325,9 +327,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             backdrop.name = "CityBackdrop_Twilight";
             Object.DestroyImmediate(backdrop.GetComponent<Collider>());
             backdrop.transform.SetParent(parent, false);
-            backdrop.transform.localPosition = new Vector3(-22f, Stage1LobbyDimensions.CityBackdropY, 2f);
+            backdrop.transform.localPosition = new Vector3(-45f, Stage1LobbyDimensions.CityBackdropY, 2f);
             backdrop.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-            backdrop.transform.localScale = new Vector3(36f, 18f * Stage1LobbyDimensions.ScaleFromLegacy, 1f);
+            backdrop.transform.localScale = new Vector3(70f, 18f * Stage1LobbyDimensions.ScaleFromLegacy, 1f);
             backdrop.GetComponent<Renderer>().sharedMaterial = m.city;
 
             // secondary backdrop visible through entrance
@@ -335,9 +337,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             ext.name = "CityBackdrop_Entrance";
             Object.DestroyImmediate(ext.GetComponent<Collider>());
             ext.transform.SetParent(parent, false);
-            ext.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.CityBackdropEntranceY, -28f);
+            ext.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.CityBackdropEntranceY, -45f);
             ext.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-            ext.transform.localScale = new Vector3(40f, 14f * Stage1LobbyDimensions.ScaleFromLegacy, 1f);
+            ext.transform.localScale = new Vector3(70f, 14f * Stage1LobbyDimensions.ScaleFromLegacy, 1f);
             ext.GetComponent<Renderer>().sharedMaterial = m.city;
         }
 
@@ -347,12 +349,12 @@ namespace PinkSoft.Aegis.Missions.Editor
             sign.name = "ExteriorSign_NexaCore";
             Object.DestroyImmediate(sign.GetComponent<Collider>());
             sign.transform.SetParent(parent, false);
-            sign.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.ExteriorSignY, -15.55f);
-            sign.transform.localScale = new Vector3(8f, 1.6f * Stage1LobbyDimensions.ScaleFromLegacy, 0.12f);
+            sign.transform.localPosition = new Vector3(0f, Stage1LobbyDimensions.ExteriorSignY, -30.55f);
+            sign.transform.localScale = new Vector3(12f, 2.2f * Stage1LobbyDimensions.ScaleFromLegacy, 0.12f);
             sign.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
             sign.GetComponent<Renderer>().sharedMaterial = m.sign;
 
-            EnsureAccentLight("Lobby_ExteriorSignLight", new Vector3(0f, Stage1LobbyDimensions.ExteriorSignY, -14f), new Color(0.9f, 0.95f, 1f), 3f, 14f);
+            EnsureAccentLight("Lobby_ExteriorSignLight", new Vector3(0f, Stage1LobbyDimensions.ExteriorSignY, -29f), new Color(0.9f, 0.95f, 1f), 3f, 14f);
         }
 
         static void BuildPlantersAndBenches(Transform parent, LobbyMaterials m)
@@ -362,27 +364,27 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             var planterPositions = new[]
             {
-                new Vector3(-10f, 0.35f, -20f),
-                new Vector3(10f, 0.35f, -20f),
-                new Vector3(-10f, 0.35f, -24f),
-                new Vector3(10f, 0.35f, -24f),
+                new Vector3(-15f, 0.35f, -34f),
+                new Vector3(15f, 0.35f, -34f),
+                new Vector3(-15f, 0.35f, -38f),
+                new Vector3(15f, 0.35f, -38f),
             };
 
             foreach (var pos in planterPositions)
             {
-                var planter = CreatePbCube("Planter", root.transform, pos, new Vector3(1.6f, 0.7f, 1.6f));
+                var planter = CreatePbCube("Planter", root.transform, pos, new Vector3(2.2f, 0.7f, 2.2f));
                 SetRendererMat(planter, m.wall);
-                var led = CreatePbCube("Planter_LED", root.transform, pos + new Vector3(0f, 0.38f, 0f), new Vector3(1.7f, 0.06f, 1.7f));
+                var led = CreatePbCube("Planter_LED", root.transform, pos + new Vector3(0f, 0.38f, 0f), new Vector3(2.3f, 0.06f, 2.3f));
                 SetRendererMat(led, m.led);
             }
 
             var benchMat = EnsureLitMat("M_Lobby_Bench", null, 0f, 0.35f, Vector2.one);
             benchMat.SetColor("_BaseColor", new Color(0.55f, 0.56f, 0.58f));
 
-            var benchPos = new[] { new Vector3(-5f, 0.25f, -21f), new Vector3(5f, 0.25f, -21f) };
+            var benchPos = new[] { new Vector3(-8f, 0.25f, -35f), new Vector3(8f, 0.25f, -35f) };
             foreach (var pos in benchPos)
             {
-                var bench = CreatePbCube("Plaza_Bench", root.transform, pos, new Vector3(2.2f, 0.5f, 0.7f));
+                var bench = CreatePbCube("Plaza_Bench", root.transform, pos, new Vector3(3.2f, 0.5f, 0.9f));
                 SetRendererMat(bench, benchMat);
             }
         }
@@ -392,9 +394,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             var stripRoot = new GameObject("Plaza_LED_Strips");
             stripRoot.transform.SetParent(parent, false);
 
-            for (var x = -12f; x <= 12f; x += 6f)
+            for (var x = -24f; x <= 24f; x += 8f)
             {
-                var strip = CreatePbCube("FloorLED", stripRoot.transform, new Vector3(x, 0.02f, -17.5f), new Vector3(4.5f, 0.02f, 0.15f));
+                var strip = CreatePbCube("FloorLED", stripRoot.transform, new Vector3(x, 0.02f, -32.5f), new Vector3(6.5f, 0.02f, 0.15f));
                 SetRendererMat(strip, m.led);
             }
         }

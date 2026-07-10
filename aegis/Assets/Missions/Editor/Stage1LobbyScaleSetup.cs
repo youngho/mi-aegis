@@ -24,8 +24,10 @@ namespace PinkSoft.Aegis.Missions.Editor
             if (File.Exists(Stage1ScenePath))
             {
                 EditorSceneManager.OpenScene(Stage1ScenePath, OpenSceneMode.Single);
+                var stage1 = GameObject.Find("Stage1_Lobby")!.transform;
+                Stage1EnvironmentSetup.ResyncEnvironmentFromPrefabs(stage1);
                 Stage1SceneSetup.SetupActiveScene();
-                Stage1LobbyArchitectureSetup.BuildArchitecture(GameObject.Find("Stage1_Lobby")!.transform);
+                Stage1LobbyArchitectureSetup.BuildArchitecture(stage1);
                 Stage1LobbyVisualSetup.ApplyToActiveScene();
                 Stage1LobbyExteriorSetup.BuildExteriorAndPostProcess();
                 EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
@@ -63,10 +65,13 @@ namespace PinkSoft.Aegis.Missions.Editor
         {
             var root = PrefabUtility.LoadPrefabContents(path);
             root.transform.localPosition = position;
-            root.transform.localScale = new Vector3(
-                root.transform.localScale.x,
-                Stage1LobbyDimensions.WallHeight,
-                root.transform.localScale.z);
+            var scale = root.transform.localScale;
+            scale.y = Stage1LobbyDimensions.WallHeight;
+            if (path.Contains("Wall_Front") || path.Contains("Wall_Back"))
+                scale.x = 60f;
+            else
+                scale.z = 60f;
+            root.transform.localScale = scale;
             PrefabUtility.SaveAsPrefabAsset(root, path);
             PrefabUtility.UnloadPrefabContents(root);
         }

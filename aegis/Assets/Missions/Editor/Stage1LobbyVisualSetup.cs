@@ -286,16 +286,14 @@ namespace PinkSoft.Aegis.Missions.Editor
             }
         }
 
-        static void SetupLightingAndProbes()
+        public static void SetupLightingAndProbes()
         {
-            var sun = Object.FindAnyObjectByType<Light>();
-            if (sun != null && sun.type == LightType.Directional)
-            {
-                sun.intensity = 0.85f;
-                sun.color = new Color(0.95f, 0.97f, 1f);
-                sun.transform.rotation = Quaternion.Euler(42f, -35f, 0f);
-                sun.shadows = LightShadows.Soft;
-            }
+            var sun = EnsureDirectionalSun();
+            sun.intensity = 1.0f;
+            sun.color = new Color(0.95f, 0.97f, 1f);
+            sun.transform.rotation = Quaternion.Euler(42f, -35f, 0f);
+            sun.shadows = LightShadows.Soft;
+            sun.shadowStrength = 0.75f;
 
             RenderSettings.ambientMode = AmbientMode.Trilight;
             RenderSettings.ambientSkyColor = new Color(0.82f, 0.85f, 0.9f);
@@ -306,9 +304,23 @@ namespace PinkSoft.Aegis.Missions.Editor
             EnsureReflectionProbe(
                 new Vector3(0f, Stage1LobbyDimensions.WallCenterY, 0f),
                 new Vector3(28f, Stage1LobbyDimensions.CeilingHeight + 2f, 28f));
-            EnsureAccentLight("Lobby_SignLight", new Vector3(0f, Stage1LobbyDimensions.BackSignCenterY, 11f), new Color(0.9f, 0.95f, 1f), 3.0f, 15f);
-            EnsureAccentLight("Lobby_ReceptionLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.6f, -4f), new Color(1f, 1f, 1f), 2.5f, 12f);
-            EnsureAccentLight("Lobby_EntranceLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.55f, -13f), new Color(0.95f, 0.98f, 1f), 2.2f, 10f);
+            EnsureAccentLight("Lobby_SignLight", new Vector3(0f, Stage1LobbyDimensions.BackSignCenterY, 11f), new Color(0.9f, 0.95f, 1f), 4.0f, 22f);
+            EnsureAccentLight("Lobby_ReceptionLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.6f, -4f), new Color(1f, 1f, 1f), 3.5f, 18f);
+            EnsureAccentLight("Lobby_EntranceLight", new Vector3(0f, Stage1LobbyDimensions.WallCenterY * 0.55f, -13f), new Color(0.95f, 0.98f, 1f), 3.0f, 16f);
+        }
+
+        public static Light EnsureDirectionalSun()
+        {
+            var sunGo = GameObject.Find("Lobby_Sun");
+            if (sunGo == null)
+            {
+                sunGo = new GameObject("Lobby_Sun");
+                sunGo.AddComponent<Light>();
+            }
+
+            var sun = sunGo.GetComponent<Light>();
+            sun.type = LightType.Directional;
+            return sun;
         }
 
         static void EnsureReflectionProbe(Vector3 pos, Vector3 size)

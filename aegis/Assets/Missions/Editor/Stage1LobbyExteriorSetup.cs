@@ -64,6 +64,7 @@ namespace PinkSoft.Aegis.Missions.Editor
             BuildExteriorSign(exterior.transform, materials);
             BuildPlantersAndBenches(exterior.transform, materials);
             BuildPlazaLedStrips(exterior.transform, materials);
+            Stage1LobbyVisualSetup.SetupLightingAndProbes();
         }
 
         struct LobbyMaterials
@@ -184,9 +185,9 @@ namespace PinkSoft.Aegis.Missions.Editor
             mat.SetFloat("_Rotation", 120f);
             RenderSettings.skybox = mat;
             RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(0.28f, 0.34f, 0.52f);
-            RenderSettings.ambientEquatorColor = new Color(0.22f, 0.2f, 0.28f);
-            RenderSettings.ambientGroundColor = new Color(0.1f, 0.1f, 0.12f);
+            RenderSettings.ambientSkyColor = new Color(0.62f, 0.68f, 0.80f);
+            RenderSettings.ambientEquatorColor = new Color(0.50f, 0.54f, 0.62f);
+            RenderSettings.ambientGroundColor = new Color(0.32f, 0.34f, 0.38f);
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.ExponentialSquared;
             RenderSettings.fogDensity = 0.012f;
@@ -241,15 +242,12 @@ namespace PinkSoft.Aegis.Missions.Editor
 
         static void SetupTwilightLighting()
         {
-            var sun = Object.FindAnyObjectByType<Light>();
-            if (sun != null && sun.type == LightType.Directional)
-            {
-                sun.intensity = 0.55f;
-                sun.color = new Color(0.75f, 0.82f, 1f);
-                sun.transform.rotation = Quaternion.Euler(12f, 145f, 0f);
-                sun.shadows = LightShadows.Soft;
-                sun.shadowStrength = 0.65f;
-            }
+            var sun = Stage1LobbyVisualSetup.EnsureDirectionalSun();
+            sun.intensity = 0.75f;
+            sun.color = new Color(0.82f, 0.88f, 1f);
+            sun.transform.rotation = Quaternion.Euler(18f, 145f, 0f);
+            sun.shadows = LightShadows.Soft;
+            sun.shadowStrength = 0.65f;
 
             EnsureAccentLight("Lobby_ExteriorRim", new Vector3(-8f, Stage1LobbyDimensions.ExteriorRimLightY, -35f), new Color(0.55f, 0.75f, 1f), 2.5f, 35f);
         }

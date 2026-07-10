@@ -36,12 +36,64 @@ namespace PinkSoft.Aegis.Missions.Editor
             new(10f, Stage1LobbyDimensions.ColumnCenterY, 10f),
         };
 
+        [MenuItem("Aegis/Repair Stage1 Lobby Environment")]
+        public static void RepairFromMenu()
+        {
+            var stage1 = GameObject.Find("Stage1_Lobby");
+            if (stage1 == null)
+            {
+                Debug.LogError("[Stage1EnvironmentSetup] Stage1_Lobby root not found.");
+                return;
+            }
+
+            RepairStage1Lobby(stage1.transform);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+            Debug.Log("[Stage1EnvironmentSetup] Lobby environment resynced from prefabs.");
+        }
+
         public static void RepairStage1Lobby(Transform stage1)
         {
             RemoveBrokenChildren(stage1);
-            EnsureEnvironment(stage1);
+            ResyncEnvironmentFromPrefabs(stage1);
             EnsureCameraPath(stage1);
             Stage1LobbyArchitectureSetup.BuildArchitecture(stage1);
+        }
+
+        /// <summary>씬 인스턴스 transform이 프리팹과 어긋난 경우 BuildingKit 기준으로 되돌립니다.</summary>
+        public static void ResyncEnvironmentFromPrefabs(Transform stage1)
+        {
+            var env = stage1.Find(EnvironmentName);
+            if (env == null)
+            {
+                EnsureEnvironment(stage1);
+                return;
+            }
+
+            var preserved = new System.Collections.Generic.HashSet<string> { "Aegis_InfoScreen", "LoungeChairs" };
+            for (var i = env.childCount - 1; i >= 0; i--)
+            {
+                var child = env.GetChild(i);
+                if (preserved.Contains(child.name))
+                    continue;
+
+                Undo.DestroyObjectImmediate(child.gameObject);
+            }
+
+            foreach (var prefabName in KitPrefabs)
+                InstantiateKitPrefab(prefabName, env);
+
+            var columnPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{KitFolder}/PF_Lobby_Column.prefab");
+            if (columnPrefab != null)
+            {
+                InstantiateKitPrefab("PF_Lobby_Column", env);
+                foreach (var pos in ExtraColumnPositions)
+                {
+                    var col = (GameObject)PrefabUtility.InstantiatePrefab(columnPrefab, env);
+                    col.name = "PF_Lobby_Column";
+                    col.transform.localPosition = pos;
+                }
+            }
         }
 
         static void RemoveBrokenChildren(Transform stage1)
@@ -65,29 +117,30 @@ namespace PinkSoft.Aegis.Missions.Editor
         static void EnsureEnvironment(Transform stage1)
         {
             var env = stage1.Find(EnvironmentName);
-            if (env != null && env.childCount > 0)
+            if (env == null)
+            {
+                var envGo = new GameObject(EnvironmentName);
+                Undo.RegisterCreatedObjectUndo(envGo, "Create " + EnvironmentName);
+                envGo.transform.SetParent(stage1, false);
+                envGo.transform.localPosition = Vector3.zero;
+                envGo.transform.localRotation = Quaternion.identity;
+                envGo.transform.localScale = Vector3.one;
+                env = envGo.transform;
+            }
+
+            if (env.childCount > 0)
                 return;
 
-            if (env != null)
-                Undo.DestroyObjectImmediate(env.gameObject);
-
-            var envGo = new GameObject(EnvironmentName);
-            Undo.RegisterCreatedObjectUndo(envGo, "Create " + EnvironmentName);
-            envGo.transform.SetParent(stage1, false);
-            envGo.transform.localPosition = Vector3.zero;
-            envGo.transform.localRotation = Quaternion.identity;
-            envGo.transform.localScale = Vector3.one;
-
             foreach (var prefabName in KitPrefabs)
-                InstantiateKitPrefab(prefabName, envGo.transform);
+                InstantiateKitPrefab(prefabName, env);
 
             var columnPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{KitFolder}/PF_Lobby_Column.prefab");
             if (columnPrefab != null)
             {
-                InstantiateKitPrefab("PF_Lobby_Column", envGo.transform);
+                InstantiateKitPrefab("PF_Lobby_Column", env);
                 foreach (var pos in ExtraColumnPositions)
                 {
-                    var col = (GameObject)PrefabUtility.InstantiatePrefab(columnPrefab, envGo.transform);
+                    var col = (GameObject)PrefabUtility.InstantiatePrefab(columnPrefab, env);
                     col.name = "PF_Lobby_Column";
                     col.transform.localPosition = pos;
                 }

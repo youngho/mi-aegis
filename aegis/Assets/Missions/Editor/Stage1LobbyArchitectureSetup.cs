@@ -216,14 +216,16 @@ namespace PinkSoft.Aegis.Missions.Editor
         {
             var seating = new GameObject("Waiting_Seating");
             seating.transform.SetParent(parent, false);
+            seating.transform.localPosition = new Vector3(1.03f, 0.52f, 0.02f);
 
-            // 1-2: 데스크 좌측 소파 뒤 스폰 (스케일된 로비에 맞추어 X 오프셋 확대)
-            BuildSofa(seating.transform, "Sofa_L", new Vector3(-8f, 0.35f, -14f), chair, metal);
-            BuildSofa(seating.transform, "Sofa_R", new Vector3(8f, 0.35f, -14f), chair, metal);
+            BuildSofa(seating.transform, "Sofa_L", new Vector3(-8f, 0.35f, -14f),
+                new Vector3(30.81f, -0.1f, 4.36f), Quaternion.Euler(-90f, 180f, 0f), 0.01f, chair, metal);
+            BuildSofa(seating.transform, "Sofa_R", new Vector3(8f, 0.35f, -14f),
+                new Vector3(14.84f, -0.1f, 0.89f), Quaternion.Euler(-90f, 0f, 0f), 0.01f, chair, metal);
 
             var coffeeTable = new GameObject("CoffeeTable");
             coffeeTable.transform.SetParent(seating.transform, false);
-            coffeeTable.transform.position = new Vector3(0f, 0.3f, -14.5f);
+            coffeeTable.transform.localPosition = new Vector3(0f, 0.3f, -14.5f);
 
             var tablePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Modern_Table/Modern_Table/scene.gltf");
             if (tablePrefab != null)
@@ -231,22 +233,22 @@ namespace PinkSoft.Aegis.Missions.Editor
                 var inst = (GameObject)PrefabUtility.InstantiatePrefab(tablePrefab);
                 inst.name = "Table_Visual";
                 inst.transform.SetParent(coffeeTable.transform, false);
-                inst.transform.localPosition = Vector3.zero;
+                inst.transform.localPosition = new Vector3(23.02f, 0f, 3.12f);
                 inst.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-                inst.transform.localScale = Vector3.one * 1.5f; // 테이블 스케일 확대
+                inst.transform.localScale = Vector3.one * 1.5f;
             }
             else
             {
-                var fallback = CreatePbCube("Table_Visual", coffeeTable.transform, Vector3.zero, new Vector3(2.4f, 0.06f, 1.2f));
+                var fallback = CreatePbCube("Table_Visual", coffeeTable.transform, new Vector3(23.02f, 0f, 3.12f), new Vector3(2.4f, 0.06f, 1.2f));
                 SetMat(fallback, metal);
             }
         }
 
-        static void BuildSofa(Transform parent, string name, Vector3 pos, Material chair, Material metal)
+        static void BuildSofa(Transform parent, string name, Vector3 localPos, Vector3 visualLocalPos, Quaternion visualLocalRot, float visualScale, Material chair, Material metal)
         {
             var sofa = new GameObject(name);
             sofa.transform.SetParent(parent, false);
-            sofa.transform.position = pos;
+            sofa.transform.localPosition = localPos;
 
             var sofaPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Lobby_Sofa/scene.gltf");
             if (sofaPrefab != null)
@@ -254,9 +256,9 @@ namespace PinkSoft.Aegis.Missions.Editor
                 var inst = (GameObject)PrefabUtility.InstantiatePrefab(sofaPrefab);
                 inst.name = "Sofa_Visual";
                 inst.transform.SetParent(sofa.transform, false);
-                inst.transform.localPosition = new Vector3(0f, -0.1f, 0f);
-                inst.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-                inst.transform.localScale = Vector3.one * 0.02f; // 소파 스케일 확대
+                inst.transform.localPosition = visualLocalPos;
+                inst.transform.localRotation = visualLocalRot;
+                inst.transform.localScale = Vector3.one * visualScale;
             }
             else
             {

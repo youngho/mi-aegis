@@ -37,21 +37,21 @@ namespace PinkSoft.Aegis.Missions.Editor
 
         public static void ApplyBuildingKitPrefabs()
         {
-            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Front.prefab", new Vector3(0f, Stage1LobbyDimensions.WallCenterY, -15.2f));
-            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Back.prefab", new Vector3(0f, Stage1LobbyDimensions.WallCenterY, 15f));
-            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Left.prefab", new Vector3(-15f, Stage1LobbyDimensions.WallCenterY, 0f));
-            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Right.prefab", new Vector3(15f, Stage1LobbyDimensions.WallCenterY, 0f));
+            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Front.prefab", new Vector3(0f, Stage1LobbyDimensions.WallCenterY, -30.2f));
+            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Back.prefab", new Vector3(0f, Stage1LobbyDimensions.WallCenterY, 30f));
+            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Left.prefab", new Vector3(-30f, Stage1LobbyDimensions.WallCenterY, 0f));
+            SetWallPrefab($"{KitFolder}/PF_Lobby_Wall_Right.prefab", new Vector3(30f, Stage1LobbyDimensions.WallCenterY, 0f));
 
             SetSimplePrefab($"{KitFolder}/PF_Lobby_Ceiling.prefab",
-                new Vector3(0f, Stage1LobbyDimensions.CeilingHeight, 0f), new Vector3(30f, 0.2f, 30f));
+                new Vector3(0f, Stage1LobbyDimensions.CeilingHeight, 0f), new Vector3(60f, 0.2f, 60f));
 
             SetSimplePrefab($"{KitFolder}/PF_Lobby_Column.prefab",
-                new Vector3(10f, Stage1LobbyDimensions.ColumnCenterY, 10f),
-                new Vector3(1f, Stage1LobbyDimensions.ColumnScaleY, 1f));
+                new Vector3(20f, Stage1LobbyDimensions.ColumnCenterY, 20f),
+                new Vector3(1.5f, Stage1LobbyDimensions.ColumnScaleY, 1.5f));
 
             SetSimplePrefab($"{KitFolder}/PF_Lobby_Shutter.prefab",
-                new Vector3(-13f, Stage1LobbyDimensions.WallHeight * 0.25f, 0f),
-                new Vector3(3f, Stage1LobbyDimensions.WallHeight * 0.5f, 0.2f));
+                new Vector3(-28f, Stage1LobbyDimensions.WallHeight * 0.25f, 0f),
+                new Vector3(4f, Stage1LobbyDimensions.WallHeight * 0.5f, 0.2f));
 
             ApplySignPrefab();
         }

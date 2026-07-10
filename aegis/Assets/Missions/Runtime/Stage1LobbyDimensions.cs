@@ -4,24 +4,24 @@ namespace PinkSoft.Aegis.Missions
     public static class Stage1LobbyDimensions
     {
         /// <summary>바닥(y=0)에서 천장 하면까지 높이.</summary>
-        public const float CeilingHeight = 10f;
+        public const float CeilingHeight = 18f;
 
         public const float WallHeight = CeilingHeight;
         public static float WallCenterY => WallHeight * 0.5f;
 
         /// <summary>대리석 기둥 mesh scale Y.</summary>
-        public const float ColumnScaleY = 5f;
+        public const float ColumnScaleY = 9f;
 
         public static float ColumnCenterY => WallCenterY;
 
         /// <summary>후면 NEXA CORE 사인 패널 중심 높이.</summary>
-        public const float BackSignCenterY = 7f;
+        public const float BackSignCenterY = 12f;
 
         /// <summary>2층 발코니 컷 카메라 look-at / 스폰 고도.</summary>
-        public const float BalconyHeight = 7.5f;
+        public const float BalconyHeight = 11f;
 
         /// <summary>2층 메자닌 바닥면 높이.</summary>
-        public const float MezzanineFloorY = 7f;
+        public const float MezzanineFloorY = 10f;
 
         /// <summary>발코니 난간 상단 높이.</summary>
         public static float MezzanineRailingTopY => BalconyHeight + 0.35f;
@@ -29,15 +29,15 @@ namespace PinkSoft.Aegis.Missions
         public const float MezzanineDeckThickness = 0.22f;
 
         /// <summary>로비 후면(엘리베이터) Z.</summary>
-        public const float BackWallZ = 15f;
+        public const float BackWallZ = 30f;
 
         /// <summary>주차장 연장 구역 시작 Z.</summary>
-        public const float ParkingStartZ = 15.5f;
+        public const float ParkingStartZ = 30.5f;
 
-        public const float ElevatorDoorHeight = 3.8f;
+        public const float ElevatorDoorHeight = 5.5f;
 
         /// <summary>공중 드론 스폰 고도.</summary>
-        public const float DroneAirHeight = 6.5f;
+        public const float DroneAirHeight = 13.5f;
 
         public const float LegacyCeilingHeight = 5f;
 

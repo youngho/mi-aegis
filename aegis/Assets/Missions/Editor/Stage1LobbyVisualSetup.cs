@@ -139,7 +139,10 @@ namespace PinkSoft.Aegis.Missions.Editor
         static void AssignMaterialInPrefabs(Material floor, Material wall, Material ceiling, Material deskStone, Material deskWood, Material column, Material sign)
         {
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Floor.prefab", floor);
-            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall.prefab", wall);
+            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Front.prefab", wall);
+            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Back.prefab", wall);
+            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Left.prefab", wall);
+            SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Wall_Right.prefab", wall);
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Ceiling.prefab", ceiling);
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Column.prefab", column);
             SetPrefabMat("Assets/Prefabs/BuildingKit/Stage1Lobby/PF_Lobby_Sign.prefab", sign);

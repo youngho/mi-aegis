@@ -106,31 +106,31 @@ namespace PinkSoft.Aegis.Missions
             switch (index)
             {
                 case 0: // 1-1 Entrance — 대각 진입 와이드
-                    t.localPosition = new Vector3(-2.5f, 3.2f, -22.0f);
+                    t.localPosition = new Vector3(-4.0f, 5.2f, -42.0f);
                     t.localEulerAngles = new Vector3(8.0f, 6.0f, 0.0f);
                     break;
                 case 1: // 1-2 Reception — 데스크 저공 슬라이드
-                    t.localPosition = new Vector3(4.5f, 1.6f, -9.5f);
+                    t.localPosition = new Vector3(8.0f, 2.8f, -22.0f);
                     t.localEulerAngles = new Vector3(12.0f, -18.0f, 0.0f);
                     break;
                 case 2: // 1-3 Balcony — 좌측 앙각
-                    t.localPosition = new Vector3(-6.0f, 1.2f, -3.0f);
+                    t.localPosition = new Vector3(-12.0f, 2.2f, -6.0f);
                     t.localEulerAngles = new Vector3(-18.0f, 22.0f, 0.0f);
                     break;
                 case 3: // 1-4 Corridor — 기둥 사이 지그재그 시작
-                    t.localPosition = new Vector3(-4.0f, 3.2f, -12.0f);
+                    t.localPosition = new Vector3(-8.0f, 6.2f, -24.0f);
                     t.localEulerAngles = new Vector3(6.0f, 12.0f, 0.0f);
                     break;
                 case 4: // 1-5 Elevator Lobby — 좌측 팬 시작
-                    t.localPosition = new Vector3(-8.0f, 3.8f, 8.0f);
+                    t.localPosition = new Vector3(-16.0f, 6.8f, 18.0f);
                     t.localEulerAngles = new Vector3(5.0f, 35.0f, 0.0f);
                     break;
                 case 5: // 1-6 Parking Lot — 고각 하강 시작
-                    t.localPosition = new Vector3(3.0f, 6.0f, 12.0f);
+                    t.localPosition = new Vector3(6.0f, 11.0f, 22.0f);
                     t.localEulerAngles = new Vector3(18.0f, -8.0f, 0.0f);
                     break;
                 case 6: // 1-7 Boss — APC 로우 앵글
-                    t.localPosition = new Vector3(0.0f, 1.4f, 2.0f);
+                    t.localPosition = new Vector3(0.0f, 2.5f, 4.0f);
                     t.localEulerAngles = new Vector3(4.0f, 0.0f, 0.0f);
                     break;
             }
@@ -222,8 +222,8 @@ namespace PinkSoft.Aegis.Missions
                     {
                         float rush = EaseOutCubic(Mathf.Clamp01(phaseElapsed / 12f));
                         t.localPosition = Vector3.Lerp(
-                            new Vector3(-2.5f, 3.2f, -22.0f),
-                            new Vector3(-0.8f, 2.6f, -15.5f),
+                            new Vector3(-4.0f, 5.2f, -42.0f),
+                            new Vector3(-1.2f, 4.2f, -32.0f),
                             rush);
                         var sway = Mathf.Sin(phaseElapsed * 1.8f) * 0.35f;
                         t.localEulerAngles = new Vector3(8f + sway, 6f - rush * 4f, sway * 0.6f);
@@ -233,8 +233,8 @@ namespace PinkSoft.Aegis.Missions
                 case 1: // 1-2 Reception — 데스크 위 저공 슬라이드 + 줌인
                     {
                         t.localPosition = Vector3.Lerp(
-                            new Vector3(4.5f, 1.6f, -9.5f),
-                            new Vector3(1.2f, 1.35f, -7.2f),
+                            new Vector3(8.0f, 2.8f, -22.0f),
+                            new Vector3(2.4f, 2.2f, -17.0f),
                             pct);
                         t.localEulerAngles = Vector3.Lerp(
                             new Vector3(12f, -18f, 0f),
@@ -247,9 +247,9 @@ namespace PinkSoft.Aegis.Missions
                     {
                         float sweep = Mathf.Sin(pct * Mathf.PI);
                         t.localPosition = new Vector3(
-                            Mathf.Lerp(-6f, 5f, pct),
-                            1.2f + sweep * 0.4f,
-                            Mathf.Lerp(-3f, -1.5f, pct));
+                            Mathf.Lerp(-12f, 10f, pct),
+                            2.2f + sweep * 0.8f,
+                            Mathf.Lerp(-6f, -3f, pct));
                         t.localEulerAngles = new Vector3(
                             -18f + sweep * 4f,
                             Mathf.Lerp(22f, -16f, pct),
@@ -259,9 +259,9 @@ namespace PinkSoft.Aegis.Missions
 
                 case 3: // 1-4 Corridor — 기둥 사이 지그재그 전진
                     {
-                        float forward = Mathf.Lerp(-12f, 6f, pct);
-                        float weave = Mathf.Sin(pct * Mathf.PI * 3f) * 3.5f;
-                        t.localPosition = new Vector3(-4f + weave, 3.2f - pct * 0.5f, forward);
+                        float forward = Mathf.Lerp(-24f, 12f, pct);
+                        float weave = Mathf.Sin(pct * Mathf.PI * 3f) * 6f;
+                        t.localPosition = new Vector3(-8f + weave, 6.2f - pct * 1f, forward);
                         t.localEulerAngles = new Vector3(6f, 12f - weave * 2f, weave * 0.4f);
                     }
                     break;
@@ -271,9 +271,9 @@ namespace PinkSoft.Aegis.Missions
                         float pan = Mathf.Lerp(35f, -35f, pct);
                         float bob = Mathf.Sin(phaseElapsed * 0.9f) * 0.25f;
                         t.localPosition = new Vector3(
-                            Mathf.Lerp(-8f, 8f, pct),
-                            3.8f + bob,
-                            Mathf.Lerp(8f, 11f, pct));
+                            Mathf.Lerp(-16f, 16f, pct),
+                            6.8f + bob * 0.4f,
+                            Mathf.Lerp(18f, 24f, pct));
                         t.localEulerAngles = new Vector3(5f + bob * 2f, pan, 0f);
                     }
                     break;
@@ -281,8 +281,8 @@ namespace PinkSoft.Aegis.Missions
                 case 5: // 1-6 Parking Lot — 하강 + 전진 돌입
                     {
                         t.localPosition = Vector3.Lerp(
-                            new Vector3(3f, 6f, 12f),
-                            new Vector3(0f, 1.5f, 17.5f),
+                            new Vector3(6f, 11f, 22f),
+                            new Vector3(0f, 2.8f, 33f),
                             pct);
                         t.localEulerAngles = Vector3.Lerp(
                             new Vector3(18f, -8f, 0f),
@@ -295,8 +295,8 @@ namespace PinkSoft.Aegis.Missions
                     {
                         float push = EaseOutCubic(Mathf.Clamp01(phaseElapsed / 25f));
                         t.localPosition = Vector3.Lerp(
-                            new Vector3(0f, 1.4f, 2f),
-                            new Vector3(0f, 1.8f, 5.5f),
+                            new Vector3(0f, 2.5f, 4f),
+                            new Vector3(0f, 3.2f, 11f),
                             push);
                         var pulse = Mathf.Sin(phaseElapsed * 2.2f) * 0.15f;
                         t.localEulerAngles = new Vector3(4f + pulse, 0f, 0f);

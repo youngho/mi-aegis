@@ -85,104 +85,104 @@ namespace PinkSoft.Aegis.Missions.Editor
 
         static void BuildCut1_1(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_1_Entrance", new Vector3(0f, 0f, -12f), "1-1 로비 입구 | 그런트×4 L2 R2");
-            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-4.2f, 1f, -14.2f));
-            CreateSpawnSlot(cut.transform, "spawn_L_far", new Vector3(-8.5f, 1f, -11.5f));
-            CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(4.5f, 1f, -13.8f));
-            CreateSpawnSlot(cut.transform, "spawn_R_far", new Vector3(7.5f, 1f, -10.2f));
+            var cut = CreateCut(parent, "Cut_1_1_Entrance", new Vector3(0f, 0f, -25f), "1-1 로비 입구 | 그런트×4 L2 R2");
+            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-8.2f, 1f, -28.2f));
+            CreateSpawnSlot(cut.transform, "spawn_L_far", new Vector3(-18.5f, 1f, -25.5f));
+            CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(8.5f, 1f, -27.8f));
+            CreateSpawnSlot(cut.transform, "spawn_R_far", new Vector3(18.5f, 1f, -24.2f));
 
-            CreateEnemy(cut.transform, "grunt_L_near_01", new Vector3(-4.2f, 1f, -14.2f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_L_far_02", new Vector3(-8.5f, 1.15f, -11.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_R_near_01", new Vector3(4.5f, 1f, -13.8f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_R_far_02", new Vector3(7.5f, 1.1f, -10.2f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_L_near_01", new Vector3(-8.2f, 1f, -28.2f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_L_far_02", new Vector3(-18.5f, 1.15f, -25.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_R_near_01", new Vector3(8.5f, 1f, -27.8f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_R_far_02", new Vector3(18.5f, 1.1f, -24.2f), GruntColor);
         }
 
         static void BuildCut1_2(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_2_Reception", new Vector3(0f, 0f, -6f), "1-2 안내 데스크 | 그런트×3 방패×1 인질×1");
-            CreateSpawnSlot(cut.transform, "spawn_C_near", new Vector3(0f, 1f, -5.0f));
-            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-4.2f, 1f, -7.8f));
+            var cut = CreateCut(parent, "Cut_1_2_Reception", new Vector3(0f, 0f, -12f), "1-2 안내 데스크 | 그런트×3 방패×1 인질×1");
+            CreateSpawnSlot(cut.transform, "spawn_C_near", new Vector3(0f, 1f, -10.0f));
+            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-8.2f, 1f, -14.8f));
 
-            CreateEnemy(cut.transform, "grunt_desk_01", new Vector3(-4.2f, 1f, -7.8f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_desk_02", new Vector3(3.8f, 1f, -6.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_desk_03", new Vector3(-1.2f, 1f, -8.5f), GruntColor);
-            CreateEnemy(cut.transform, "shield_C_near", new Vector3(0.3f, 1f, -4.8f), ShieldColor, new Vector3(0.8f, 1.2f, 0.4f));
-            CreateEnemy(cut.transform, "hostage_desk_clerk", new Vector3(0.8f, 0.9f, -5.6f), HostageColor, new Vector3(0.5f, 1.6f, 0.4f));
+            CreateEnemy(cut.transform, "grunt_desk_01", new Vector3(-8.2f, 1f, -14.8f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_desk_02", new Vector3(7.8f, 1f, -13.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_desk_03", new Vector3(-2.2f, 1f, -15.5f), GruntColor);
+            CreateEnemy(cut.transform, "shield_C_near", new Vector3(0.3f, 1f, -9.8f), ShieldColor, new Vector3(0.8f, 1.2f, 0.4f));
+            CreateEnemy(cut.transform, "hostage_desk_clerk", new Vector3(0.8f, 0.9f, -10.6f), HostageColor, new Vector3(0.5f, 1.6f, 0.4f));
         }
 
         static void BuildCut1_3(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_3_Balcony", new Vector3(0f, 0f, -2f), "1-3 발코니 앙각 | 저격×2 드론×2");
-            CreateSpawnSlot(cut.transform, "spawn_L_far", new Vector3(-8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, -2.5f));
-            CreateSpawnSlot(cut.transform, "spawn_R_far", new Vector3(8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 2.0f));
-            CreateSpawnSlot(cut.transform, "spawn_air_R", new Vector3(7f, Stage1LobbyDimensions.DroneAirHeight, -3f));
-            CreateSpawnSlot(cut.transform, "spawn_air_L", new Vector3(-5f, Stage1LobbyDimensions.DroneAirHeight - 0.4f, 2.5f));
+            var cut = CreateCut(parent, "Cut_1_3_Balcony", new Vector3(0f, 0f, -4f), "1-3 발코니 앙각 | 저격×2 드론×2");
+            CreateSpawnSlot(cut.transform, "spawn_L_far", new Vector3(-16f, Stage1LobbyDimensions.BalconyHeight + 0.2f, -5f));
+            CreateSpawnSlot(cut.transform, "spawn_R_far", new Vector3(16f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 4f));
+            CreateSpawnSlot(cut.transform, "spawn_air_R", new Vector3(14f, Stage1LobbyDimensions.DroneAirHeight, -6f));
+            CreateSpawnSlot(cut.transform, "spawn_air_L", new Vector3(-10f, Stage1LobbyDimensions.DroneAirHeight - 0.4f, 5f));
 
-            CreateEnemy(cut.transform, "sniper_L_far", new Vector3(-8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, -2.5f), SniperColor);
-            CreateEnemy(cut.transform, "sniper_R_far", new Vector3(8f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 2.0f), SniperColor);
-            CreateEnemy(cut.transform, "drone_air_R", new Vector3(7f, Stage1LobbyDimensions.DroneAirHeight, -3f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
-            CreateEnemy(cut.transform, "drone_air_L", new Vector3(-5f, Stage1LobbyDimensions.DroneAirHeight - 0.4f, 2.5f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "sniper_L_far", new Vector3(-16f, Stage1LobbyDimensions.BalconyHeight + 0.2f, -5f), SniperColor);
+            CreateEnemy(cut.transform, "sniper_R_far", new Vector3(16f, Stage1LobbyDimensions.BalconyHeight + 0.2f, 4f), SniperColor);
+            CreateEnemy(cut.transform, "drone_air_R", new Vector3(14f, Stage1LobbyDimensions.DroneAirHeight, -6f), DroneColor, new Vector3(0.8f, 0.5f, 0.8f));
+            CreateEnemy(cut.transform, "drone_air_L", new Vector3(-10f, Stage1LobbyDimensions.DroneAirHeight - 0.4f, 5f), DroneColor, new Vector3(0.8f, 0.5f, 0.8f));
         }
 
         static void BuildCut1_4(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_4_Corridor", new Vector3(0f, 0f, -2f), "1-4 기둥 복도 | 그런트×5 인질×1");
+            var cut = CreateCut(parent, "Cut_1_4_Corridor", new Vector3(0f, 0f, -4f), "1-4 기둥 복도 | 그런트×5 인질×1");
             var columnSpawns = new[]
             {
-                ("spawn_L_near", new Vector3(-10f, 1f, -6.5f)),
-                ("spawn_C_far", new Vector3(0.5f, 1f, -2.5f)),
-                ("spawn_R_near", new Vector3(10f, 1f, -4.5f)),
-                ("spawn_L_far", new Vector3(-10f, 1f, 3.5f)),
+                ("spawn_L_near", new Vector3(-20f, 1f, -12.5f)),
+                ("spawn_C_far", new Vector3(0.5f, 1f, -4.5f)),
+                ("spawn_R_near", new Vector3(20f, 1f, -8.5f)),
+                ("spawn_L_far", new Vector3(-20f, 1f, 7.5f)),
             };
             foreach (var (name, pos) in columnSpawns)
                 CreateSpawnSlot(cut.transform, name, pos);
 
-            CreateEnemy(cut.transform, "grunt_col_L_01", new Vector3(-10f, 1f, -6.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_col_C_02", new Vector3(0.5f, 1f, -2.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_col_R_03", new Vector3(10f, 1f, -4.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_col_L_04", new Vector3(-10f, 1.1f, 3.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_col_R_05", new Vector3(10f, 1f, 5.5f), GruntColor);
-            CreateEnemy(cut.transform, "hostage_col_R", new Vector3(8.5f, 0.9f, -3.8f), HostageColor, new Vector3(0.5f, 1.6f, 0.4f));
+            CreateEnemy(cut.transform, "grunt_col_L_01", new Vector3(-20f, 1f, -12.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_col_C_02", new Vector3(0.5f, 1f, -4.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_col_R_03", new Vector3(20f, 1f, -8.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_col_L_04", new Vector3(-20f, 1.1f, 7.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_col_R_05", new Vector3(20f, 1f, 11.5f), GruntColor);
+            CreateEnemy(cut.transform, "hostage_col_R", new Vector3(17f, 0.9f, -7.8f), HostageColor, new Vector3(0.5f, 1.6f, 0.4f));
         }
 
         static void BuildCut1_5(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_5_ElevatorLobby", new Vector3(0f, 0f, 10f), "1-5 엘리베이터 로비 | 실드엘리트×2 그런트×2");
-            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-4.5f, 1f, 12.2f));
-            CreateSpawnSlot(cut.transform, "spawn_C_near", new Vector3(0f, 1f, 13.5f));
-            CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(4.5f, 1f, 12.2f));
+            var cut = CreateCut(parent, "Cut_1_5_ElevatorLobby", new Vector3(0f, 0f, 20f), "1-5 엘리베이터 로비 | 실드엘리트×2 그런트×2");
+            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-8.5f, 1f, 24.2f));
+            CreateSpawnSlot(cut.transform, "spawn_C_near", new Vector3(0f, 1f, 25.5f));
+            CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(8.5f, 1f, 24.2f));
 
-            CreateEnemy(cut.transform, "shield_elite_L", new Vector3(-4.5f, 1f, 12.2f), ShieldColor, new Vector3(0.9f, 1.3f, 0.5f));
-            CreateEnemy(cut.transform, "shield_elite_R", new Vector3(4.5f, 1f, 12.2f), ShieldColor, new Vector3(0.9f, 1.3f, 0.5f));
-            CreateEnemy(cut.transform, "grunt_elev_01", new Vector3(-1.8f, 1f, 13.8f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_elev_02", new Vector3(1.8f, 1f, 13.8f), GruntColor);
+            CreateEnemy(cut.transform, "shield_elite_L", new Vector3(-8.5f, 1f, 24.2f), ShieldColor, new Vector3(0.9f, 1.3f, 0.5f));
+            CreateEnemy(cut.transform, "shield_elite_R", new Vector3(8.5f, 1f, 24.2f), ShieldColor, new Vector3(0.9f, 1.3f, 0.5f));
+            CreateEnemy(cut.transform, "grunt_elev_01", new Vector3(-3.5f, 1f, 26.8f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_elev_02", new Vector3(3.5f, 1f, 26.8f), GruntColor);
         }
 
         static void BuildCut1_6(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_6_ParkingLot", new Vector3(0f, 0f, 16f), "1-6 주차장 | 그런트×4 드론×3");
-            foreach (var (side, x, z) in new[] { ("L", -5.5f, 15.5f), ("C", 0f, 14.2f), ("R", 5.5f, 15.8f) })
+            var cut = CreateCut(parent, "Cut_1_6_ParkingLot", new Vector3(0f, 0f, 32f), "1-6 주차장 | 그런트×4 드론×3");
+            foreach (var (side, x, z) in new[] { ("L", -11f, Stage1LobbyDimensions.BackWallZ + 3f), ("C", 0f, Stage1LobbyDimensions.BackWallZ + 1.5f), ("R", 11f, Stage1LobbyDimensions.BackWallZ + 4f) })
                 CreateSpawnSlot(cut.transform, $"spawn_{side}_near", new Vector3(x, 1f, z));
 
-            CreateEnemy(cut.transform, "grunt_park_L", new Vector3(-5.5f, 1f, 15.5f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_park_C_01", new Vector3(-1.2f, 1f, 14.2f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_park_C_02", new Vector3(1.2f, 1f, 16.8f), GruntColor);
-            CreateEnemy(cut.transform, "grunt_park_R", new Vector3(5.5f, 1f, 15.8f), GruntColor);
-            CreateEnemy(cut.transform, "drone_park_L", new Vector3(-3.5f, Stage1LobbyDimensions.DroneAirHeight + 0.5f, 17.5f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
-            CreateEnemy(cut.transform, "drone_park_C", new Vector3(0f, Stage1LobbyDimensions.DroneAirHeight, 18.5f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
-            CreateEnemy(cut.transform, "drone_park_R", new Vector3(4f, Stage1LobbyDimensions.DroneAirHeight - 0.8f, 16f), DroneColor, new Vector3(0.5f, 0.3f, 0.5f));
+            CreateEnemy(cut.transform, "grunt_park_L", new Vector3(-11f, 1f, Stage1LobbyDimensions.BackWallZ + 3f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_park_C_01", new Vector3(-2.5f, 1f, Stage1LobbyDimensions.BackWallZ + 1.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_park_C_02", new Vector3(2.5f, 1f, Stage1LobbyDimensions.BackWallZ + 5.5f), GruntColor);
+            CreateEnemy(cut.transform, "grunt_park_R", new Vector3(11f, 1f, Stage1LobbyDimensions.BackWallZ + 4f), GruntColor);
+            CreateEnemy(cut.transform, "drone_park_L", new Vector3(-7f, Stage1LobbyDimensions.DroneAirHeight + 1f, Stage1LobbyDimensions.BackWallZ + 6f), DroneColor, new Vector3(0.8f, 0.5f, 0.8f));
+            CreateEnemy(cut.transform, "drone_park_C", new Vector3(0f, Stage1LobbyDimensions.DroneAirHeight + 0.5f, Stage1LobbyDimensions.BackWallZ + 7.5f), DroneColor, new Vector3(0.8f, 0.5f, 0.8f));
+            CreateEnemy(cut.transform, "drone_park_R", new Vector3(8f, Stage1LobbyDimensions.DroneAirHeight - 0.5f, Stage1LobbyDimensions.BackWallZ + 5f), DroneColor, new Vector3(0.8f, 0.5f, 0.8f));
         }
 
         static void BuildCut1_7(Transform parent)
         {
-            var cut = CreateCut(parent, "Cut_1_7_Boss_APC", new Vector3(0f, 0f, 8f), "1-7 APC 보스 | P1탑 P2유탄 P3운전석");
-            CreateSpawnSlot(cut.transform, "spawn_C_far", new Vector3(0f, 2.5f, 10f));
-            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-4f, 1.8f, 9f));
-            CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(4f, 1.8f, 9f));
+            var cut = CreateCut(parent, "Cut_1_7_Boss_APC", new Vector3(0f, 0f, 15f), "1-7 APC 보스 | P1탑 P2유탄 P3운전석");
+            CreateSpawnSlot(cut.transform, "spawn_C_far", new Vector3(0f, 2.5f, 22f));
+            CreateSpawnSlot(cut.transform, "spawn_L_near", new Vector3(-8f, 1.8f, 17f));
+            CreateSpawnSlot(cut.transform, "spawn_R_near", new Vector3(8f, 1.8f, 17f));
 
-            CreateEnemy(cut.transform, "boss_apc_turret_C", new Vector3(0f, 2.8f, 18.2f), BossColor, new Vector3(1.2f, 0.8f, 1.2f));
-            CreateEnemy(cut.transform, "boss_apc_grenade_L", new Vector3(-1.0f, 1.8f, 19.5f), BossColor, new Vector3(0.8f, 0.8f, 0.8f));
-            CreateEnemy(cut.transform, "boss_apc_cockpit_R", new Vector3(1.0f, 1.2f, 19.5f), BossColor, new Vector3(1f, 1f, 1.2f));
+            CreateEnemy(cut.transform, "boss_apc_turret_C", new Vector3(0f, 2.8f, 30.2f), BossColor, new Vector3(1.2f, 0.8f, 1.2f));
+            CreateEnemy(cut.transform, "boss_apc_grenade_L", new Vector3(-2.0f, 1.8f, 31.5f), BossColor, new Vector3(0.8f, 0.8f, 0.8f));
+            CreateEnemy(cut.transform, "boss_apc_cockpit_R", new Vector3(2.0f, 1.2f, 31.5f), BossColor, new Vector3(1f, 1f, 1.2f));
 
             GameObject apcBody = null;
             var apcPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/ARX_APC/scene.gltf");
@@ -192,9 +192,9 @@ namespace PinkSoft.Aegis.Missions.Editor
                 Undo.RegisterCreatedObjectUndo(apcBody, "Create APC Body");
                 apcBody.name = "APC_Body_Visual";
                 apcBody.transform.SetParent(cut.transform, false);
-                apcBody.transform.localPosition = new Vector3(0f, 0.0f, 10f);
+                apcBody.transform.localPosition = new Vector3(0f, 0.0f, 22f);
                 apcBody.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
-                apcBody.transform.localScale = Vector3.one * 0.55f;
+                apcBody.transform.localScale = Vector3.one * 0.9f;
             }
             else
             {
@@ -202,8 +202,8 @@ namespace PinkSoft.Aegis.Missions.Editor
                 Undo.RegisterCreatedObjectUndo(apcBody, "Create APC Body");
                 apcBody.name = "APC_Body_Visual";
                 apcBody.transform.SetParent(cut.transform, false);
-                apcBody.transform.localPosition = new Vector3(0f, 1.2f, 10f);
-                apcBody.transform.localScale = new Vector3(4f, 2f, 6f);
+                apcBody.transform.localPosition = new Vector3(0f, 1.8f, 22f);
+                apcBody.transform.localScale = new Vector3(6f, 3f, 9f);
                 apcBody.GetComponent<Collider>().enabled = false;
                 var renderer = apcBody.GetComponent<Renderer>();
                 if (renderer != null)
@@ -350,13 +350,13 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             var presets = new (string name, Vector3 pos, Vector3 lookAt, float fov)[]
             {
-                ("Vcam_1_1_Entrance", new Vector3(-2.5f, 3.2f, -22f), new Vector3(-0.5f, 2.2f, -14f), 48f),
-                ("Vcam_1_2_Reception", new Vector3(4.5f, 1.6f, -9.5f), new Vector3(0f, 1.5f, -6.5f), 42f),
-                ("Vcam_1_3_Balcony", new Vector3(-6f, 1.2f, -3f), new Vector3(0f, Stage1LobbyDimensions.BalconyHeight, 1f), 50f),
-                ("Vcam_1_4_Corridor", new Vector3(-4f, 3.2f, -12f), new Vector3(0f, 2.5f, 4f), 38f),
-                ("Vcam_1_5_ElevatorLobby", new Vector3(-8f, 3.8f, 8f), new Vector3(0f, 3f, 13f), 42f),
-                ("Vcam_1_6_ParkingLot", new Vector3(3f, 6f, 12f), new Vector3(0f, 1.8f, 19f), 46f),
-                ("Vcam_1_7_Boss", new Vector3(0f, 1.4f, 2f), new Vector3(0f, 2.8f, 11f), 40f),
+                ("Vcam_1_1_Entrance", new Vector3(-4f, 5.2f, -42f), new Vector3(-1f, 3.5f, -30f), 48f),
+                ("Vcam_1_2_Reception", new Vector3(8f, 2.8f, -22f), new Vector3(0f, 2.5f, -14f), 42f),
+                ("Vcam_1_3_Balcony", new Vector3(-12f, 2.2f, -6f), new Vector3(0f, Stage1LobbyDimensions.BalconyHeight, 2f), 50f),
+                ("Vcam_1_4_Corridor", new Vector3(-8f, 6.2f, -24f), new Vector3(0f, 4.5f, 8f), 38f),
+                ("Vcam_1_5_ElevatorLobby", new Vector3(-16f, 6.8f, 18f), new Vector3(0f, 5.5f, 28f), 42f),
+                ("Vcam_1_6_ParkingLot", new Vector3(6f, 11f, 22f), new Vector3(0f, 3.2f, 36f), 46f),
+                ("Vcam_1_7_Boss", new Vector3(0f, 2.5f, 4f), new Vector3(0f, 5.5f, 23f), 40f),
             };
 
             for (var i = 0; i < presets.Length; i++)

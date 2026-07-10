@@ -43,6 +43,23 @@ namespace PinkSoft.Aegis.Missions.Editor
             Debug.Log("[StageArchitectureMigration] Complete. Stage1_Lobby = play scene, AegisMissionFull = all stages.");
         }
 
+        /// <summary>Stage3_Datacenter 환경·컷·카메라 재구성.</summary>
+        [MenuItem("Aegis/Repair Stage3 Datacenter Scene")]
+        public static void RepairStage3DatacenterScene()
+        {
+            const string stage3Path = "Assets/Scenes/Stages/Stage3_Datacenter.unity";
+            if (!File.Exists(stage3Path))
+            {
+                Debug.LogError($"[StageArchitectureMigration] Missing {stage3Path}");
+                return;
+            }
+
+            EditorSceneManager.OpenScene(stage3Path, OpenSceneMode.Single);
+            Stage3SceneSetup.SetupActiveScene();
+            EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
+            Debug.Log("[StageArchitectureMigration] Stage3_Datacenter repaired.");
+        }
+
         /// <summary>Stage2_Lab 환경·컷·카메라 재구성.</summary>
         [MenuItem("Aegis/Repair Stage2 Lab Scene")]
         public static void RepairStage2LabScene()

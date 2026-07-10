@@ -47,6 +47,7 @@ namespace PinkSoft.Aegis.Missions.Editor
         {
             var floor = LoadMat("M_Lobby_Floor");
             var wall = LoadMat("M_Lobby_Wall");
+            var ceiling = LoadMat("M_Lobby_Ceiling");
             var metal = LoadMat("M_Lobby_Desk");
             var glass = LoadMat("M_Lobby_Glass");
             var column = LoadMat("M_Lobby_Column");
@@ -55,37 +56,66 @@ namespace PinkSoft.Aegis.Missions.Editor
             var root = GetOrCreateRoot(stage1, ArchitectureRootName);
             ClearChildren(root.transform);
 
-            OpenBackWallForParking(stage1);
-            BuildMezzanine(root.transform, floor, metal, glass, column);
+            EnsureLobbyEnvironmentShell(stage1);
+            BuildLobbyEnvelope(root.transform, wall);
+            BuildMezzanine(root.transform, floor, metal, glass, column, wall, ceiling);
             BuildWaitingSeating(root.transform, chair, metal);
             BuildElevatorBank(root.transform, wall, metal, glass);
             BuildParkingExtension(root.transform, floor, metal);
             BuildBossPlazaGlass(root.transform, glass, metal);
         }
 
-        static void OpenBackWallForParking(Transform stage1)
+        static void EnsureLobbyEnvironmentShell(Transform stage1)
         {
             var env = stage1.Find("Environment_Stage1_Lobby");
             if (env == null)
                 return;
 
-            Transform? backWall = null;
             foreach (Transform child in env)
             {
-                if (child.name.Contains("Wall_Back"))
-                {
-                    backWall = child;
-                    break;
-                }
+                var name = child.name;
+                if (name.Contains("Ceiling"))
+                    child.gameObject.SetActive(true);
+                else if (name.Contains("Wall_Left") || name.Contains("Wall_Right"))
+                    child.gameObject.SetActive(true);
+                else if (name.Contains("Wall_Front") || name.Contains("Wall_Back"))
+                    child.gameObject.SetActive(false);
             }
-
-            if (backWall == null)
-                return;
-
-            backWall.gameObject.SetActive(false);
         }
 
-        static void BuildMezzanine(Transform parent, Material floor, Material metal, Material glass, Material column)
+        /// <summary>정면·후면 개구부를 제외한 외곽 쉘 및 1층 천장 보강.</summary>
+        static void BuildLobbyEnvelope(Transform parent, Material wall)
+        {
+            var shell = new GameObject("Lobby_Envelope");
+            shell.transform.SetParent(parent, false);
+
+            var h = Stage1LobbyDimensions.WallHeight;
+            var cy = Stage1LobbyDimensions.WallCenterY;
+            var half = Stage1LobbyDimensions.LobbyHalfSpan;
+            var frontZ = Stage1LobbyDimensions.FrontWallZ;
+            var backZ = Stage1LobbyDimensions.BackWallZ;
+            var wallT = 0.35f;
+
+            var wingSpan = half - Stage1LobbyDimensions.EntrancePortalWidth * 0.5f;
+            var wingCenterX = half - wingSpan * 0.5f;
+
+            BuildWallSegment(shell.transform, "Shell_Wall_Front_L", new Vector3(-wingCenterX, cy, frontZ), new Vector3(wingSpan, h, wallT), wall);
+            BuildWallSegment(shell.transform, "Shell_Wall_Front_R", new Vector3(wingCenterX, cy, frontZ), new Vector3(wingSpan, h, wallT), wall);
+            BuildWallSegment(shell.transform, "Shell_Wall_Front_Lintel", new Vector3(0f, h - 1.25f, frontZ), new Vector3(Stage1LobbyDimensions.EntrancePortalWidth, 2.5f, wallT), wall);
+
+            var portalHalf = Stage1LobbyDimensions.ParkingPortalWidth * 0.5f;
+            var portalCy = Stage1LobbyDimensions.ParkingPortalHeight * 0.5f;
+            var backWingSpan = half - portalHalf;
+            var backWingCenterX = half - backWingSpan * 0.5f;
+
+            BuildWallSegment(shell.transform, "Shell_Wall_Back_L", new Vector3(-backWingCenterX, cy, backZ), new Vector3(backWingSpan, h, wallT), wall);
+            BuildWallSegment(shell.transform, "Shell_Wall_Back_R", new Vector3(backWingCenterX, cy, backZ), new Vector3(backWingSpan, h, wallT), wall);
+            BuildWallSegment(shell.transform, "Shell_Wall_Back_Lintel", new Vector3(0f, h - 1.25f, backZ), new Vector3(Stage1LobbyDimensions.ParkingPortalWidth, 2.5f, wallT), wall);
+            BuildWallSegment(shell.transform, "Shell_Portal_Jamb_L", new Vector3(-portalHalf, portalCy, backZ), new Vector3(wallT, Stage1LobbyDimensions.ParkingPortalHeight, wallT), wall);
+            BuildWallSegment(shell.transform, "Shell_Portal_Jamb_R", new Vector3(portalHalf, portalCy, backZ), new Vector3(wallT, Stage1LobbyDimensions.ParkingPortalHeight, wallT), wall);
+        }
+
+        static void BuildMezzanine(Transform parent, Material floor, Material metal, Material glass, Material column, Material wall, Material? ceiling)
         {
             var mezz = new GameObject("Mezzanine_2F");
             mezz.transform.SetParent(parent, false);
@@ -99,6 +129,8 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             // 후면 연결 브릿지 (엘리베이터 구역 위)
             BuildDeck(mezz.transform, "Deck_BackBridge", new Vector3(0f, deckY, 24f), new Vector3(60f, Stage1LobbyDimensions.MezzanineDeckThickness, 12f), floor);
+
+            BuildMezzanineCeiling(mezz.transform, ceiling ?? floor, wall);
 
             BuildRailingRun(mezz.transform, "Railing_L_Inner", new Vector3(-14.2f, deckY + deckHalf, -5f), 50f, true, metal, glass);
             BuildRailingRun(mezz.transform, "Railing_R_Inner", new Vector3(14.2f, deckY + deckHalf, -5f), 50f, false, metal, glass);
@@ -125,6 +157,27 @@ namespace PinkSoft.Aegis.Missions.Editor
 
             // 2층 벽 및 전투용 커버 상세
             Build2FDetails(mezz.transform, column, metal, glass);
+        }
+
+        static void BuildMezzanineCeiling(Transform parent, Material ceiling, Material wall)
+        {
+            var ceilingY = Stage1LobbyDimensions.MezzanineCeilingY;
+            var thickness = Stage1LobbyDimensions.MezzanineCeilingThickness;
+
+            BuildDeck(parent, "Ceiling_2F_L", new Vector3(-22f, ceilingY, -5f), new Vector3(16f, thickness, 50f), ceiling);
+            BuildDeck(parent, "Ceiling_2F_R", new Vector3(22f, ceilingY, -5f), new Vector3(16f, thickness, 50f), ceiling);
+            BuildDeck(parent, "Ceiling_2F_Back", new Vector3(0f, ceilingY, 24f), new Vector3(60f, thickness, 12f), ceiling);
+
+            // 발코니 내측 상부 소핏 (아트리움 쪽 마감)
+            var soffitY = ceilingY - thickness * 0.5f;
+            BuildDeck(parent, "Soffit_L", new Vector3(-14.5f, soffitY, -5f), new Vector3(1.2f, thickness, 48f), ceiling);
+            BuildDeck(parent, "Soffit_R", new Vector3(14.5f, soffitY, -5f), new Vector3(1.2f, thickness, 48f), ceiling);
+
+            // 후면 주차 개구부 상부 보강 (린텔 위~18m 천장 사이)
+            var infillHeight = Stage1LobbyDimensions.CeilingHeight - ceilingY;
+            var infillCy = ceilingY + infillHeight * 0.5f;
+            BuildWallSegment(parent, "Infill_Above_Portal_L", new Vector3(-12f, infillCy, Stage1LobbyDimensions.BackWallZ), new Vector3(8f, infillHeight, 0.3f), wall);
+            BuildWallSegment(parent, "Infill_Above_Portal_R", new Vector3(12f, infillCy, Stage1LobbyDimensions.BackWallZ), new Vector3(8f, infillHeight, 0.3f), wall);
         }
 
         static void Build2FDetails(Transform parent, Material wallMat, Material metalMat, Material glassMat)

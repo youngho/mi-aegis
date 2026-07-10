@@ -56,7 +56,6 @@ namespace PinkSoft.Aegis.Missions.Editor
             var exterior = GetOrCreateRoot(stage1.transform, ExteriorRootName);
             ClearChildren(exterior.transform);
 
-            HideSolidLeftWall();
             BuildExteriorPlaza(exterior.transform, materials);
             BuildEntranceCanopy(exterior.transform, materials);
             BuildGlassFacade(exterior.transform, materials);
@@ -250,15 +249,6 @@ namespace PinkSoft.Aegis.Missions.Editor
             sun.shadowStrength = 0.65f;
 
             EnsureAccentLight("Lobby_ExteriorRim", new Vector3(-8f, Stage1LobbyDimensions.ExteriorRimLightY, -35f), new Color(0.55f, 0.75f, 1f), 2.5f, 35f);
-        }
-
-        static void HideSolidLeftWall()
-        {
-            foreach (var t in Object.FindObjectsByType<Transform>(FindObjectsSortMode.None))
-            {
-                if (t.name.Contains("Wall_Left") || t.name.Contains("PF_Lobby_Wall_Left"))
-                    t.gameObject.SetActive(false);
-            }
         }
 
         static void BuildExteriorPlaza(Transform parent, LobbyMaterials m)

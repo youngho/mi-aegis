@@ -28,6 +28,24 @@ namespace PinkSoft.Aegis.Missions
 
         public const float MezzanineDeckThickness = 0.22f;
 
+        /// <summary>2층 복도·사무실 천장 높이 (메자닌 바닥 + 4m).</summary>
+        public const float MezzanineCeilingY = 14f;
+
+        public const float MezzanineCeilingThickness = 0.2f;
+
+        /// <summary>로비 외곽 반폭 (60m 정사각).</summary>
+        public const float LobbyHalfSpan = 30f;
+
+        public const float FrontWallZ = -30.2f;
+
+        /// <summary>후면 주차장 연결 개구부 폭·높이.</summary>
+        public const float ParkingPortalWidth = 16f;
+
+        public const float ParkingPortalHeight = 6.5f;
+
+        /// <summary>정면 회전문 개구부 폭.</summary>
+        public const float EntrancePortalWidth = 14f;
+
         /// <summary>로비 후면(엘리베이터) Z.</summary>
         public const float BackWallZ = 30f;
 
